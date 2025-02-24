@@ -16,7 +16,7 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'programStudi'
+        'Department'
     ];
 
     /**
@@ -47,8 +47,8 @@ class User extends Authenticatable
         return $this->hasMany(Dokumen::class);
     }
 
-    public function programStudi()
+    public function department()
     {
-        return $this->belongsTo(ProgramStudi::class);
+        return $this->belongsTo(Department::class);
     }
 }

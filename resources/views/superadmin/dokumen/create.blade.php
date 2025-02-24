@@ -12,10 +12,10 @@
       <div class="row justify-content-between align-items-center p-3">
         @csrf
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="nama" class="text-dark h6">Nama</label>
-            <input  class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" id="nama" value="{{ old('nama') }}" required>
-            @if ($errors->has('nama'))
-              <p class="error text-danger">{{ $errors->first('nama') }}</p>
+            <label for="name" class="text-dark h6">Nama</label>
+            <input  class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" value="{{ old('name') }}" required>
+            @if ($errors->has('name'))
+              <p class="error text-danger">{{ $errors->first('name') }}</p>
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
@@ -41,15 +41,15 @@
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="programStudi" class="text-dark h6" >Program Studi</label>
-          <select class="form-control @error('programStudi') is-invalid @enderror" name="programStudi" id="programStudi" required>
+          <label for="Departments" class="text-dark h6" >Program Studi</label>
+          <select class="form-control @error('Departments') is-invalid @enderror" name="Departments" id="Departments" required>
             <option hidden disabled selected>Pilih Program Studi</option>
             @foreach ($users as $user)
-              <option value="{{ $user->id }}" {{ old('programStudi') == $user->id ? 'selected' : '' }}>{{ $user->programStudi->nama }}</option>
+              <option value="{{ $user->id }}" {{ old('Departments') == $user->id ? 'selected' : '' }}>{{ $user->department->name }}</option>
             @endforeach
           </select>
-          @if ($errors->has('programStudi'))
-            <p class="error text-danger">{{ $errors->first('programStudi') }}</p>
+          @if ($errors->has('Departments'))
+            <p class="error text-danger">{{ $errors->first('Departments') }}</p>
           @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
@@ -130,20 +130,20 @@
 
     document.getElementById('status').addEventListener('change', function() {
       const value = this.value;
-      const programStudi = document.getElementById('programStudi');
+      const Departments = document.getElementById('Departments');
       if (value == 'share') {
-        for (let i = 0; i < programStudi.options.length; i++) {
+        for (let i = 0; i < Departments.options.length; i++) {
           if (i !== 1) {
-            programStudi.options[i].disabled = true;
+            Departments.options[i].disabled = true;
           }
         }
-        programStudi.selectedIndex = 1;
-        programStudi.required = false;
+        Departments.selectedIndex = 1;
+        Departments.required = false;
       } else {
-        for (let i = 0; i < programStudi.options.length; i++) {
-          programStudi.options[i].disabled = false;
+        for (let i = 0; i < Departments.options.length; i++) {
+          Departments.options[i].disabled = false;
         }
-        programStudi.required = true;
+        Departments.required = true;
       }
     });
 

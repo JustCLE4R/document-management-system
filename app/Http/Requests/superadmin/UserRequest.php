@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
-            'prodi' => 'required|exists:program_studis,id',
+            'department' => 'required|exists:department_ids,id',
             'role' => 'required|in:admin,user',
             'password' => 'required|string|min:8|confirmed',
         ];
@@ -36,8 +36,8 @@ class UserRequest extends FormRequest
             'name.required' => 'Nama harus diisi.',
             'username.required' => 'Username harus diisi.',
             'username.unique' => 'Username sudah digunakan.',
-            'prodi.required' => 'Program Studi harus diisi.',
-            'prodi.exists' => 'Program Studi yang dipilih tidak valid.',
+            'department.required' => 'Program Studi harus diisi.',
+            'department.exists' => 'Program Studi yang dipilih tidak valid.',
             'role.required' => 'Role harus diisi.',
             'role.in' => 'Role harus admin atau user.',
             'password.required' => 'Password harus diisi.',
@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'Nama Lengkap',
             'username' => 'Username',
-            'prodi' => 'Program Studi',
+            'department' => 'Program Studi',
             'role' => 'Role',
             'password' => 'Password',
             'password_confirmation' => 'Konfirmasi Password',
@@ -61,7 +61,7 @@ class UserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'program_studi_id' => $this->prodi,
+            'department_id' => $this->department,
         ]);
     }
 }

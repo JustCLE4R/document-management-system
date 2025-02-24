@@ -23,7 +23,7 @@ class DokumenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|max:255',
+            'name' => 'required|max:255',
             'kriteria' => 'required|numeric|between:1,12',
             'sub_kriteria' => 'max:255',
             'catatan' => 'max:255',
@@ -50,7 +50,7 @@ class DokumenRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'nama' => 'Nama',
+            'name' => 'Nama',
             'kriteria' => 'Kriteria',
             'sub_kriteria' => 'Sub Kriteria',
             'catatan' => 'Catatan',

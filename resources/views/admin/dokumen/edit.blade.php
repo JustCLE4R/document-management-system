@@ -22,10 +22,10 @@
       <div class="row justify-content-between align-items-center p-3">
         @csrf
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="nama" class="text-dark h6">Nama</label>
-            <input  class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" id="nama" value="{{ old('nama', $dokumen->nama) }}" required>
-            @if ($errors->has('nama'))
-              <p class="error text-danger">{{ $errors->first('nama') }}</p>
+            <label for="name" class="text-dark h6">Nama</label>
+            <input  class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" value="{{ old('name', $dokumen->name) }}" required>
+            @if ($errors->has('name'))
+              <p class="error text-danger">{{ $errors->first('name') }}</p>
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
@@ -80,7 +80,7 @@
           <select class="form-control" name="shareable" id="shareable" disabled>
             <option value="" hidden></option>
             @foreach ($shareables as $shareable)
-              <option value="{{ $shareable->id }}" path="{{ $shareable->path }}" {{ old('shareable', $dokumen->borrow_from) == $shareable->id ? 'selected' : '' }}>{{ $shareable->nama }}</option>
+              <option value="{{ $shareable->id }}" path="{{ $shareable->path }}" {{ old('shareable', $dokumen->borrow_from) == $shareable->id ? 'selected' : '' }}>{{ $shareable->name }}</option>
             @endforeach
           </select>
           @if ($errors->has('shareable'))

@@ -26,8 +26,8 @@
           @endif
       </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="prodi" class="text-dark h6">Program Studi</label> <br>
-            <input class="form-control" type="text" name="prodi" id="prodi" value="{{ $user->programStudi->nama }}" disabled>
+            <label for="department" class="text-dark h6">Program Studi</label> <br>
+            <input class="form-control" type="text" name="department" id="department" value="{{ $user->department->name }}" disabled>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
           <label for="role" class="text-dark h6">Role Akun</label> <br>

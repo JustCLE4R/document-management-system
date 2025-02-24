@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\superadmin;
 
 use App\Models\User;
-use App\Models\ProgramStudi;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -17,17 +17,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $prodiSearch = request()->input('prodi');
+        $prodiSearch = request()->input('department');
         $roleSearch = request()->input('role');
 
-        $prodis = ProgramStudi::where('id', '>', 1)->orderBy('nama', 'asc')->get();
+        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
 
         $users = $this->search($prodiSearch, $roleSearch, 10)->withQueryString();
         
         return view('superadmin.akun.index',[
             'title' => 'Super Admin Daftar User',
             'users' => $users,
-            'prodis' => $prodis,
+            'departments' => $departments,
         ]);
     }
 
@@ -36,11 +36,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        $prodis = ProgramStudi::where('id', '>', 1)->orderBy('nama', 'asc')->get();
+        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
 
         return view('superadmin.akun.create', [
             'title' => 'Super Admin Tambah User',
-            'prodis' => $prodis
+            'departments' => $departments
         ]);
     }
 
@@ -67,12 +67,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $prodis = ProgramStudi::where('id', '>', 1)->orderBy('nama', 'asc')->get();
+        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
 
         return view('superadmin.akun.edit', [
             'title' => 'Super Admin Edit User',
             'user' => $user,
-            'prodis' => $prodis
+            'departments' => $departments
         ]);
     }
 
@@ -88,7 +88,7 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'program_studi_id' => $request->program_studi_id,
+            'department_id' => $request->department_id,
             'role' => $request->role,
         ];
 
@@ -110,13 +110,13 @@ class UserController extends Controller
         return redirect('/superadmin/user')->with('success', 'User <b>' . $user->name . '</b> berhasil dihapus');
     }
 
-    private function search(int $prodi = null, string $role = null,  int $paginate = 10){
+    private function search(int $department = null, string $role = null,  int $paginate = 10){
         $query = User::query();
 
         $query->where('id', '>', 1);
 
-        if ($prodi) {
-            $query->where('program_studi_id', $prodi);
+        if ($department) {
+            $query->where('department_id', $department);
         }
 
         if ($role) {

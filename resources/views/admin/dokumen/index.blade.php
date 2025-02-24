@@ -79,7 +79,7 @@
         @foreach ($dokumens as $dokumen)
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
-            <td><a class="text-success" href="/admin/dokumen/{{ $dokumen->id }}">{{ $dokumen->nama }}</a></td>
+            <td><a class="text-success" href="/admin/dokumen/{{ $dokumen->id }}">{{ $dokumen->name }}</a></td>
             <td class="text-center">{{ $dokumen->kriteria }}</td>
             <td>{{ $dokumen->sub_kriteria }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>
@@ -98,7 +98,7 @@
                       </button>
                     </div>
                     <div class="modal-body d-flex justify-content-start text-dark">
-                      Apakah anda yakin ingin menghapus dokumen&nbsp; <b>{{ $dokumen->nama }}</b> &nbsp;ini?
+                      Apakah anda yakin ingin menghapus dokumen&nbsp; <b>{{ $dokumen->name }}</b> &nbsp;ini?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

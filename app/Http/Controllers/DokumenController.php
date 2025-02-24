@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dokumen;
-use App\Models\ProgramStudi;
+use App\Models\Kriteria;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,69 +12,59 @@ class DokumenController extends Controller
 {
     public function getDokumen(Request $request)
     {
-        $kriteria = $request->query('kriteria');
-        if (!in_array($kriteria, ['', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])) {
+        $kriteriaId = $request->query('kriteria');
+        $kriteria = Kriteria::find($kriteriaId);
+
+        if (!$kriteria && $kriteriaId) {
             return redirect('/')->with('error', 'Kriteria tidak ditemukan');
         }
+
         $term = $request->input('result');
         $tipe = $request->input('tipe');
-        $prodi = $request->input('prodi');
+        $department = $request->input('department');
 
-        $h2s = [
-            '' => 'Semua Dokumen',
-            1 => 'Kriteria 1',
-            2 => 'Kriteria 2',
-            3 => 'Kriteria 3',
-            4 => 'Kriteria 4',
-            5 => 'Kriteria 5',
-            6 => 'Kriteria 6',
-            7 => 'Kriteria 7',
-            8 => 'Kriteria 8',
-            9 => 'Kriteria 9',
-            10 => 'Kondisi Eksternal',
-            11 => 'Profil Institusi',
-            12 => 'Analisis & Penetapan Program Pengembangan',
-        ];
-        $h2 = $h2s[$kriteria];
+        $h2 = $kriteria ? $kriteria->name : 'Semua Dokumen';
 
-        $dokumens = $this->search($term, $kriteria, $tipe, $prodi, 10);
-        $prodis = ProgramStudi::where('id', '>', 1)->orderBy('nama', 'asc')->get();
+        $dokumens = $this->search($term, $kriteriaId, $tipe, $department, 10);
+        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
+        $kriterias = Kriteria::all();
 
         return view('dokumen.index', [
             'title' => 'Daftar Dokumen',
             'h2' => $h2,
             'dokumens' => $dokumens,
-            'prodis' => $prodis,
+            'departments' => $departments,
+            'kriterias' => $kriterias,
         ]);
     }
 
-    public function search(string $term = null, string $kriteria = null, string $tipe = null, string $prodi = null, int $paginate = 6) : object
+    public function search(string $term = null, string $kriteria = null, string $tipe = null, string $department = null, int $paginate = 6) : object
     {
         $query = Dokumen::query();
 
         if ($term) {
             $query->where(function ($query) use ($term) {
-            $query->where('nama', 'like', '%' . $term . '%')
+            $query->where('name', 'like', '%' . $term . '%')
                 ->orWhere('sub_kriteria', 'like', '%' . $term . '%')
                 ->orWhere('catatan', 'like', '%' . $term . '%');
             });
         }
 
         if ($kriteria) {
-            $query->where('kriteria', $kriteria);
+            $query->where('kriteria_id', $kriteria);
         }
 
         if ($tipe) {
             $query->where('tipe', $tipe);
         }
 
-        if ($prodi && Auth::user()->role == 'superadmin') {
-            $query->whereHas('user.programStudi', function ($query ) use ($prodi) {
-                $query->where('id', $prodi);
+        if ($department && Auth::user()->role == 'superadmin') {
+            $query->whereHas('user.department', function ($query ) use ($department) {
+                $query->where('id', $department);
             });
         } elseif (Auth::user()->role != 'superadmin') {
-            $query->whereHas('user.programStudi', function ($query) {
-                $query->where('id', Auth::user()->programStudi->id);
+            $query->whereHas('user.department', function ($query) {
+                $query->where('id', Auth::user()->department->id);
             });
         }
 

@@ -13,10 +13,10 @@
         @method('PUT')
         @csrf
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="nama" class=" text-dark h6">Nama</label>
-            <input  class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" id="nama" value="{{ old('nama', $dokumen->nama) }}" required>
-            @if ($errors->has('nama'))
-              <p class="error text-danger">{{ $errors->first('nama') }}</p>
+            <label for="name" class=" text-dark h6">Nama</label>
+            <input  class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name" value="{{ old('name', $dokumen->name) }}" required>
+            @if ($errors->has('name'))
+              <p class="error text-danger">{{ $errors->first('name') }}</p>
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
@@ -41,10 +41,10 @@
           @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="programStudi" class=" text-dark h6" >Program Studi</label>
-          <select class="form-control @error('programStudi') is-invalid @enderror" name="programStudi" id="programStudi" disabled>
-            @foreach ($prodis as $prodi)
-              <option value="{{ $prodi->id }}" {{ old('programStudi', $dokumen->user->programStudi->id) == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+          <label for="Departments" class=" text-dark h6" >Program Studi</label>
+          <select class="form-control @error('Departments') is-invalid @enderror" name="Departments" id="Departments" disabled>
+            @foreach ($departments as $department)
+              <option value="{{ $department->id }}" {{ old('Departments', $dokumen->user->department->id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
             @endforeach
           </select>
         </div>

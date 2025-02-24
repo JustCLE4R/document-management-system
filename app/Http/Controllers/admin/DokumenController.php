@@ -66,7 +66,7 @@ class DokumenController extends Controller
 
         Dokumen::create($prepareData);
 
-        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>'. $request->nama . '</b> berhasil ditambahkan!');
+        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>'. $request->name . '</b> berhasil ditambahkan!');
     }
 
     /**
@@ -74,7 +74,7 @@ class DokumenController extends Controller
      */
     public function show(Dokumen $dokumen)
     {
-        if($dokumen->user->programStudi->id != Auth::user()->programStudi->id)
+        if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
         return view('admin.dokumen.show', [
@@ -88,7 +88,7 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen)
     {
-        if($dokumen->user->programStudi->id != Auth::user()->programStudi->id)
+        if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
         $shareables = Dokumen::where('status', 'share')->get();
@@ -105,10 +105,10 @@ class DokumenController extends Controller
      */
     public function update(UpdateDokumenRequest $request, Dokumen $dokumen)
     {
-        if($dokumen->user->programStudi->id != Auth::user()->programStudi->id)
+        if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
-        $prepareData = $request->only(['nama', 'kriteria', 'sub_kriteria', 'catatan']);
+        $prepareData = $request->only(['name', 'kriteria', 'sub_kriteria', 'catatan']);
 
         if ($request->hasFile('file')) {
             $prepareData['status'] ='private';
@@ -129,7 +129,7 @@ class DokumenController extends Controller
 
         $dokumen->update($prepareData);
 
-        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->nama . '</b> berhasil diubah');
+        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->name . '</b> berhasil diubah');
     }
 
     /**
@@ -137,7 +137,7 @@ class DokumenController extends Controller
      */
     public function destroy(Dokumen $dokumen)
     {
-        if($dokumen->user->programStudi->id != Auth::user()->programStudi->id){
+        if($dokumen->user->department->id != Auth::user()->department->id){
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
         }
 
@@ -146,6 +146,6 @@ class DokumenController extends Controller
         }
 
         $dokumen->delete();
-        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->nama . '</b> berhasil dihapus!');
+        return redirect('/admin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->name . '</b> berhasil dihapus!');
     }
 }

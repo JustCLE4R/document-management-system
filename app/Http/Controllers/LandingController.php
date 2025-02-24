@@ -3,26 +3,32 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dokumen;
-use App\Models\ProgramStudi;
+use App\Models\Kriteria;
+use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 
 class LandingController extends Controller
 {
     public function index(){
         $dokumenCount = Dokumen::query();
-        $prodis = ProgramStudi::where('id', '>', 1)->orderBy('nama', 'asc')->get();
+        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
+        $kriterias = Kriteria::where(function ($query) {
+            $query->where('department_id', Auth::user()->department->id)
+                ->orWhereNull('department_id');
+        })->get();
 
         if (Auth::user()->role == 'superadmin') {
             $dokumenCount = $dokumenCount->count();
         } else {
-            $dokumenCount = $dokumenCount->whereHas('user.programStudi', function ($query) {
-                $query->where('id', Auth::user()->programStudi->id);
+            $dokumenCount = $dokumenCount->whereHas('user.department', function ($query) {
+                $query->where('id', Auth::user()->department->id);
             })->count();
         }
 
         return view('index', [
             'dokumenCount' => $dokumenCount,
-            'prodis' => $prodis
+            'departments' => $departments,
+            'kriterias' => $kriterias,
         ]);
     }
 }

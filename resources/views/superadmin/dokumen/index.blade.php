@@ -58,10 +58,10 @@
               <option value="PDF" {{ request()->input('tipe') == 'PDF' ? 'selected' : '' }}>PDF</option>
               <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
             </select>
-            <select class="form-select p-1 bg-success text-light shadow" name="prodi" id="" style="max-width: 70px">
+            <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 70px">
               <option value="" selected>Prodi</option>
-              @foreach ($prodis as $prodi)
-                <option value="{{ $prodi->id }}" {{ request()->input('prodi') == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+              @foreach ($departments as $department)
+                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
               @endforeach
             </select>
             <input type="text" class="form-control shadow" name="result" placeholder="Cari Dokumen.." aria-describedby="button-addon2" value="{{ old('result', request()->input('result')) }}">
@@ -98,10 +98,10 @@
         @foreach ($dokumens as $dokumen)
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
-            <td><a class="text-success" href="{{ route('dokumen.show', $dokumen->id) }}">{{ $dokumen->nama }}</a></td>
+            <td><a class="text-success" href="{{ route('dokumen.show', $dokumen->id) }}">{{ $dokumen->name }}</a></td>
             <td class="text-center">{{ $dokumen->kriteria }}</td>
             <td>{{ $dokumen->sub_kriteria }}</td>
-            <td>{{ $dokumen->user->programStudi->nama }}</td>
+            <td>{{ $dokumen->user->department->name }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>
             <td class="text-center">
               <a class="text-primary" href="{{ route('dokumen.edit', $dokumen->id) }}"><i class="bi bi-pencil-square"></i></a>
@@ -118,7 +118,7 @@
                       </button>
                     </div>
                     <div class="modal-body d-flex justify-content-start text-dark">
-                      Apakah anda yakin ingin menghapus dokumen "{{ $dokumen->nama }}"?
+                      Apakah anda yakin ingin menghapus dokumen "{{ $dokumen->name }}"?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\superadmin;
 
 use App\Models\User;
 use App\Models\Dokumen;
-use App\Models\ProgramStudi;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -21,16 +21,16 @@ class DokumenController extends Controller
         $term = $request->input('result');
         $kriteria = $request->input('kriteria');
         $tipe = $request->input('tipe');
-        $prodi = $request->input('prodi');
+        $department = $request->input('department');
 
-        $dokumens = $this->search($term, $kriteria, $tipe, $prodi, 10);
+        $dokumens = $this->search($term, $kriteria, $tipe, $department, 10);
 
-        $prodis = ProgramStudi::orderByRaw("id = 1 desc, nama asc")->get();
+        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
 
         return view('superadmin.dokumen.index', [
             'title' => 'Super Admin Daftar Dokumen',
             'dokumens' => $dokumens,
-            'prodis' => $prodis,
+            'departments' => $departments,
         ]);
     }
 
@@ -39,12 +39,12 @@ class DokumenController extends Controller
      */
     public function create()
     {
-        $prodis = ProgramStudi::orderByRaw("id = 1 desc, nama asc")->get();
-        $users = User::where('role', '!=', 'user')->get()->unique('program_studi_id');
+        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
+        $users = User::where('role', '!=', 'user')->get()->unique('department_id');
 
         return view('superadmin.dokumen.create', [
             'title' => 'Super Admin Tambah Dokumen',
-            'prodis' => $prodis,
+            'departments' => $departments,
             'users' => $users
         ]);
     }
@@ -66,7 +66,7 @@ class DokumenController extends Controller
 
         Dokumen::create($data);
 
-        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $data['nama'] . '</b> berhasil ditambahkan');
+        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $data['name'] . '</b> berhasil ditambahkan');
     }
 
     /**
@@ -85,10 +85,10 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen)
     {
-        $prodis = ProgramStudi::orderByRaw("id = 1 desc, nama asc")->get();
+        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
 
         return view('superadmin.dokumen.edit', [
-            'prodis' => $prodis,
+            'departments' => $departments,
             'title' => 'Super Admin Edit Dokumen',
             'dokumen' => $dokumen
         ]);
@@ -99,7 +99,7 @@ class DokumenController extends Controller
      */
     public function update(UpdateDokumenRequest $request, Dokumen $dokumen)
     {
-        $prepareData = $request->only(['nama', 'kriteria', 'sub_kriteria', 'catatan']);
+        $prepareData = $request->only(['name', 'kriteria', 'sub_kriteria', 'catatan']);
 
         if ($request->hasFile('file')) {
             if ($dokumen->tipe != 'URL') {
@@ -117,7 +117,7 @@ class DokumenController extends Controller
 
         $dokumen->update($prepareData);
 
-        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->nama . '</b> berhasil diubah');
+        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->name . '</b> berhasil diubah');
     }
 
     /**
@@ -130,19 +130,19 @@ class DokumenController extends Controller
         }
 
         $dokumen->delete();
-        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->nama . '</b> berhasil dihapus!');
+        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $dokumen->name . '</b> berhasil dihapus!');
     }
 
     /**
      * Search dokumen.
      */
-    private function search(string $term = null, string $kriteria = null, string $tipe = null, int $prodi = null, int $paginate = 6) : object
+    private function search(string $term = null, string $kriteria = null, string $tipe = null, int $department = null, int $paginate = 6) : object
     {
         $query = Dokumen::query();
 
         if ($term) {
             $query->where(function ($query) use ($term) {
-            $query->where('nama', 'like', '%' . $term . '%')
+            $query->where('name', 'like', '%' . $term . '%')
                 ->orWhere('sub_kriteria', 'like', '%' . $term . '%')
                 ->orWhere('catatan', 'like', '%' . $term . '%');
             });
@@ -154,9 +154,9 @@ class DokumenController extends Controller
         if ($tipe) 
             $query->where('tipe', $tipe);
 
-        if ($prodi) 
-            $query->whereHas('user.programStudi', function ($query) use ($prodi) {
-                $query->where('id', $prodi);
+        if ($department) 
+            $query->whereHas('user.department', function ($query) use ($department) {
+                $query->where('id', $department);
             });
 
         $query->orderByDesc('created_at');

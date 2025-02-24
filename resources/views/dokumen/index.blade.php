@@ -13,12 +13,9 @@
       <div class="input-group mb-3">
         <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 90px;">
           <option value="" selected>Kriteria</option>
-          @for ($i = 1; $i <= 9; $i++)
-          <option value="{{ $i }}" {{ request()->input('kriteria') == $i ? 'selected' : '' }}>{{ 'Kriteria '.$i }}</option>
-          @endfor
-          <option value="10" {{ request()->input('kriteria') == '10' ? 'selected' : '' }}>Kondisi Eksternal</option>
-          <option value="11" {{ request()->input('kriteria') == '11' ? 'selected' : '' }}>Profil Institusi</option>
-          <option value="12" {{ request()->input('kriteria') == '12' ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+          @foreach ($kriterias as $kriteria)
+            <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+          @endforeach
         </select>
         <select class="form-select p2  bg-success text-light shadow" name="tipe" id="" style="width: 60px;">
           <option value="" selected>Tipe</option>
@@ -27,10 +24,10 @@
           <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
         </select>
         @if (Auth::user()->role == 'superadmin')
-          <select name="prodi" class="form-select p-1 bg-success text-light shadow" id="" style="max-width: 125px">
+          <select name="department" class="form-select p-1 bg-success text-light shadow" id="" style="max-width: 125px">
             <option value="" selected>Program Studi</option>
-            @foreach ($prodis as $prodi)
-              <option value="{{ $prodi->id }}" {{ request()->input('prodi') == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+            @foreach ($departments as $department)
+              <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
             @endforeach
           </select>
         @endif
@@ -65,9 +62,9 @@
             </span>
             <div class="text p-3">
               @if (Auth::user()->role == 'superadmin')
-                <span class="text-secondary float-right" style="font-size: .8rem">{{ $dokumen->user->programStudi->nama }}</span>
+                <span class="text-secondary float-right" style="font-size: .8rem">{{ $dokumen->user->department->name }}</span>
               @endif
-              <h4>{{ $dokumen->nama }}</h4> 
+              <h4>{{ $dokumen->name }}</h4> 
               <p class="text-secondary pb-3">
                 {{ __(($dokumen->kriteria > 9 ? ['Kondisi Eksternal', 'Profil Institusi', 'Analisis & Penetapan Program Pengembangan'][$dokumen->kriteria-10] : 'Kriteria '.$dokumen->kriteria)) }}
               </p>

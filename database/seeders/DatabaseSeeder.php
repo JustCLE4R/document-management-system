@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Dokumen;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Database\Seeders\KriteriaSeeder;
@@ -17,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(ProgramStudiSeeder::class);
+        $this->call(DepartmentsSeeder::class);
 
         $this->createUser('Super Admin', 'superadmin', 'superadmin', 'superadmin', 1);
 
@@ -45,7 +44,7 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => $name,
-            'program_studi_id' => $department,
+            'department_id' => $department,
             'username' => $username,
             'password' => Hash::make($password),
             'role' => $role,

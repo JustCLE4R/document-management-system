@@ -49,13 +49,13 @@
       </div>
       <!-- Services item -->
       <div class="col-md-6 col-lg-4 col-xs-12">
-        <a href="/superadmin/prodi">
+        <a href="/superadmin/department">
         <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.6s">
           <div class="icon">
             <i class="bi bi-building-gear"></i>
           </div>
           <div class="services-content">
-            <span ><a class="h4 text-success" href="/superadmin/prodi">Program Studi</a></span>
+            <span ><a class="h4 text-success" href="/superadmin/department">Program Studi</a></span>
           </div>
         </div>
         </a>

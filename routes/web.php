@@ -6,9 +6,10 @@ use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\admin\UserController as AdminUserController;
 use App\Http\Controllers\admin\DokumenController as AdminDokumenController;
+use App\Http\Controllers\admin\KriteriaController as AdminKriteriaController;
 use App\Http\Controllers\superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\superadmin\DokumenController as SuperadminDokumenController;
-use App\Http\Controllers\superadmin\ProgramStudiController as SuperadminProdiController;
+use App\Http\Controllers\superadmin\DepartmentController as SuperadminDepartmentController;
 
 Route::middleware(['guest', 'no-cache', 'security-header'])->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -24,12 +25,13 @@ Route::middleware(['auth', 'security-header'])->group(function () {
 Route::prefix('admin')->middleware(['auth', 'is-admin', 'security-header'])->group(function () {
     Route::view('/', 'admin.index');
     Route::resource('/dokumen', AdminDokumenController::class)->parameters(['dokumen' => 'dokumen']);
+    Route::resource('/kriteria', AdminKriteriaController::class)->parameters(['kriteria' => 'kriteria'])->names('admin.kriteria');
     Route::resource('/user', AdminUserController::class)->only(['edit', 'update', 'show']);
 });
 
 Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-header'])->group(function () {
     Route::view('/', 'superadmin.index');
     Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen']);
-    Route::resource('/prodi', SuperadminProdiController::class)->parameters(['prodi' => 'prodi'])->except(['show']);
+    Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show']);
     Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show']);
 });

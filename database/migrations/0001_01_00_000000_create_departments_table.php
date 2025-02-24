@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('program_studis', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->foreignId('parent_id')->nullable()->constrained('departments')->onDelete('cascade');
+            $table->string('name', 255)->notNullable();
+            $table->enum('type', ['faculty', 'program'])->notNullable();
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('program_studis');
+        Schema::dropIfExists('department_ids');
     }
 };

@@ -13,31 +13,28 @@
       <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
         <div class="contents move-effect ">
           <h4> 
-        Halo,
-        @if (Auth::user()->role == 'superadmin')
-            Superadmin!
-        @elseif (Auth::user()->role == 'admin')
-            Admin
-            {{ Auth::user()->programStudi->nama }}!
-        @else
-            Asesor
-            {{ Auth::user()->programStudi->nama }}!
-            
-        @endif
-    </h4>
+            Halo,
+            @if (Auth::user()->role == 'superadmin')
+                Superadmin!
+            @elseif (Auth::user()->role == 'admin')
+                Admin
+                {{ Auth::user()->department->name }}!
+            @else
+                Asesor
+                {{ Auth::user()->department->name }}!
+                
+            @endif
+          </h4>
           <h2 class="head-title wow fadeInRight" ata-wow-delay="0.3s">Selamat Datang di Website Pusat Data Akreditasi Prodi</h2>
           <p class=" wow fadeInRight" ata-wow-delay="0.3s">Pusat Data Bukti Fisik Pendukung Akreditasi Prodi Universitas Islam Negeri Sumatera Utara Medan</p>
           <div class="header-button wow fadeInRight" ata-wow-delay="0.5s">
             <form class="d-inline" action="/daftar-dokumen" method="get">
               <div class="input-group mb-3">
-                <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 80px;">
+                <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 90px;">
                   <option value="" selected>Kriteria</option>
-                  @for ($i = 1; $i <= 9; $i++)
-                  <option value="{{ $i }}" {{ request()->input('kriteria') == $i ? 'selected' : '' }}>{{ 'Kriteria '.$i }}</option>
-                  @endfor
-                  <option value="10" {{ request()->input('kriteria') == '10' ? 'selected' : '' }}>Kondisi Eksternal</option>
-                  <option value="11" {{ request()->input('kriteria') == '11' ? 'selected' : '' }}>Profil Institusi</option>
-                  <option value="12" {{ request()->input('kriteria') == '12' ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+                  @foreach ($kriterias as $kriteria)
+                    <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+                  @endforeach
                 </select>
                 <select class="form-select p2 bg-success text-light shadow" name="tipe" id="" style="width: 60px;">
                   <option value="" selected>Tipe</option>
@@ -46,10 +43,10 @@
                   <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
                 </select>
                 @if (Auth::user()->role == 'superadmin')
-                  <select class="form-select p-1 bg-success text-light shadow" name="prodi" id="" style="max-width: 70px">
+                  <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 70px">
                     <option value="" selected>Prodi</option>
-                    @foreach ($prodis as $prodi)
-                      <option value="{{ $prodi->id }}" {{ request()->input('prodi') == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+                    @foreach ($departments as $department)
+                      <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
                     @endforeach
                   </select>
                 @endif
@@ -110,195 +107,22 @@
     </div>
     <div class="row">
 
-      <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kriteria=10'">
-        <div class="services-item wow fadeInRight border border" data-wow-delay="0.3s" >
-          <div class="bg-img" style="background-image: url('/img/kriteria/kondisi.png');">
-            <div class="icon bg-light">
-              <i class="bi bi-globe2"></i>
+      @foreach ($kriterias as $kriteria)
+        <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kriteria={{ $kriteria->id }}'">
+          <div class="services-item bg-light wow fadeInRight border" data-wow-delay="0.9s" >
+            <div class="bg-img" style="background-image: url('{{ url('storage/'.$kriteria->image) }}');">
+              <div class="icon bg-light ">
+                <i class="bi bi-{{ $kriteria->icon }}"></i>
+              </div>
+            </div>
+            <div class="services-content p-3">
+              <h3><a href="/daftar-dokumen?kriteria=1">{{ $kriteria->name }}</a></h3>
+              <p>{{ $kriteria->description }}</p>
             </div>
           </div>
-          <div class="services-content p-3 pb-3">
-            <h3><a href="/daftar-dokumen?kriteria=10">Kondisi </a></h3>
-            <p>Eksternal</p>
-          </div>
         </div>
-      </div>
+      @endforeach
 
-      <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kriteria=11'">
-        <a href="/daftar-dokumen?kriteria=11" >
-          <div class="services-item bg-light wow fadeInRight border" data-wow-delay="0.6s" >
-          <div class="bg-img" style="background-image: url('/img/kriteria/profil.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-building-fill-gear"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=11">Profil </a></h3>
-            <p>Institusi</p>
-          </div>
-        </div>
-        </a>
-      </div>
-
-      <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kriteria=1'">
-        <a href="/daftar-dokumen?kriteria=1" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="0.9s" >
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-1.webp');">
-            <div class="icon bg-light ">
-              <i class="bi bi-flag"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=1">Kriteria 1</a></h3>
-            <p>Visi, Misi, Tujuan dan Startegi</p>
-          </div>
-        </div>
-        </a>
-      </div>
-
-      <div class="col-md-6 col-lg-4 col-xs-12"  onclick="window.location.href = '/daftar-dokumen?kriteria=2'">
-        <a href="/daftar-dokumen?kriteria=2" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.2s" >
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-2.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-people"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=2">Kriteria 2</a></h3>
-            <p>Tata Pamong, Tata Kelola, dan Kerja Sama</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12"  onclick="window.location.href = '/daftar-dokumen?kriteria=3'">
-      <a href="/daftar-dokumen?kriteria=3" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.5s" >
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-3.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-mortarboard"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=3">Kriteria 3</a></h3>
-            <p>Mahasisawa</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=4'">
-        <a href="/daftar-dokumen?kriteria=4" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.8s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-4.avif');">
-            <div class="icon bg-light ">
-              <i class="bi bi-person-standing"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=4">Kriteria 4</a></h3>
-            <p>Sumber Daya Manusia</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=5'">
-        <a href="/daftar-dokumen?kriteria=5" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.2s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-5.png');">
-            <div class="icon bg-light ">
-              <i class="bi bi-gear-wide-connected"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=5">Kriteria 5</a></h3>
-            <p>Keuangan, Sarana dan Prasarana</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=6'">
-        <a href="/daftar-dokumen?kriteria=6" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.5s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-6.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-book-half"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=6">Kriteria 6</a></h3>
-            <p>Pendidikan</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=7'">
-        <a href="/daftar-dokumen?kriteria=7" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.8s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-7.svg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-journal"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=7">Kriteria 7</a></h3>
-            <p>Penelitian</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=8'">
-        <a href="/daftar-dokumen?kriteria=8" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.2s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-8.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-heart-pulse-fill"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=8">Kriteria 8</a></h3>
-            <p>Pengabian Kepada Masyarakat</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=9'">
-        <a href="/daftar-dokumen?kriteria=9" >
-        <div class="services-item bg-light border wow fadeInRight " data-wow-delay="1.5s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-9.jpg');">
-            <div class="icon bg-light ">
-              <i class="bi bi-trophy"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=9">Kriteria 9</a></h3>
-            <p>Luaran dan Capaian Tridharma</p>
-          </div>
-        </div>
-        </a>
-      </div>
-     
-      <div class="col-md-6 col-lg-4 col-xs-12" data-wow-delay="1.5s" onclick="window.location.href = '/daftar-dokumen?kriteria=12'">
-        <a href="/daftar-dokumen?kriteria=12" >
-        <div class="services-item bg-light wow fadeInRight border" data-wow-delay="1.8s">
-          <div class="bg-img" style="background-image: url('/img/kriteria/kriteria-10.png');">
-            <div class="icon bg-light ">
-              <i class="bi bi-graph-up-arrow"></i>
-            </div>
-          </div>
-          <div class="services-content p-3">
-            <h3><a href="/daftar-dokumen?kriteria=12">Analisis & Penetapan</a></h3>
-            <p>Program Pengembangan</p>
-          </div>
-        </div>
-        </a>
-      </div>
     </div>
   </div>
 </section>

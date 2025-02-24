@@ -42,10 +42,10 @@
       <div class="col-lg-4 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/user" method="get">
           <div class="input-group">
-            <select class="custom-select p-1 bg-success text-light shadow" name="prodi" id="" style="max-width: 200px;;">
+            <select class="custom-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 200px;;">
               <option value="" selected>Program Studi</option>
-              @foreach ($prodis as $prodi)
-                <option value="{{ $prodi->id }}" {{ request()->input('prodi') == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+              @foreach ($departments as $department)
+                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
               @endforeach
             </select>
             <select class="custom-select p-1 bg-success text-light shadow" name="role" id="">
@@ -72,7 +72,7 @@
         @foreach ($users as $user)
           <tr>
             <td class="text-center">{{ $users->firstItem() + $loop->index }}</td>
-            <td>{{ $user->programStudi->nama }}</td>
+            <td>{{ $user->department->name }}</td>
             <td class="text-center">{{ $user->role }}</td>
             <td class="text-center">
               <a class="text-primary" href="/superadmin/user/{{ $user->id }}/edit"><i class="bi bi-pencil-square"></i></a>
@@ -90,12 +90,12 @@
                       Apakah anda yakin ingin menghapus Akun&nbsp;<b>{{ $user->name }}</b>&nbsp;ini?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                       <form class="d-inline" action="/superadmin/user/{{ $user->id }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                       </form>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
                   </div>
                 </div>

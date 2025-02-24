@@ -26,15 +26,15 @@
           @endif
       </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="prodi" class="text-dark h6">Program Studi</label> <br>
-            <select class="form-control @error('prodi') is-invalid @enderror" name="prodi" id="prodi" required>
+            <label for="department" class="text-dark h6">Program Studi</label> <br>
+            <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
               <option value="" selected>Pilih Program Studi</option>
-              @foreach ($prodis as $prodi)
-                <option value="{{ $prodi->id }}" {{ old('prodi', $user->programStudi->id) == $prodi->id ? 'selected' : '' }}>{{ $prodi->nama }}</option>
+              @foreach ($departments as $department)
+                <option value="{{ $department->id }}" {{ old('department', $user->department->id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
               @endforeach
             </select>
-            @if ($errors->has('prodi'))
-              <p class="error text-danger">{{ $errors->first('prodi') }}</p>
+            @if ($errors->has('department'))
+              <p class="error text-danger">{{ $errors->first('department') }}</p>
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">

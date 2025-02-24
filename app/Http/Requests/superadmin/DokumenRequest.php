@@ -23,10 +23,10 @@ class DokumenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|max:255',
+            'name' => 'required|max:255',
             'kriteria' => 'required|numeric|between:1,12',
             'sub_kriteria' => 'max:255',
-            'programStudi' => 'required|exists:program_studis,id',
+            'Departments' => 'required|exists:department_ids,id',
             'status' => 'required|in:private,share,borrow',
             'catatan' => 'max:255',
             'file' => 'required_without_all:url|mimes:pdf,png,jpg,jpeg|max:102400',
@@ -37,14 +37,14 @@ class DokumenRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nama.required' => 'Nama harus diisi.',
-            'nama.max' => 'Nama tidak boleh melebihi 255 karakter.',
+            'name.required' => 'Nama harus diisi.',
+            'name.max' => 'Nama tidak boleh melebihi 255 karakter.',
             'kriteria.required' => 'Kriteria harus diisi.',
             'kriteria.numeric' => 'Kriteria harus berupa angka.',
             'kriteria.between' => 'Kriteria harus di antara 1 dan 12.',
             'sub_kriteria.max' => 'Sub Kriteria tidak boleh melebihi 255 karakter.',
-            'programStudi.required' => 'Program Studi harus diisi.',
-            'programStudi.exists' => 'Program Studi yang dipilih tidak valid.',
+            'Departments.required' => 'Program Studi harus diisi.',
+            'Departments.exists' => 'Program Studi yang dipilih tidak valid.',
             'status.required' => 'Status harus diisi.',
             'status.in' => 'Status yang dipilih tidak valid.',
             'catatan.max' => 'Catatan tidak boleh melebihi 255 karakter.',
@@ -60,7 +60,7 @@ class DokumenRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'nama' => 'Nama',
+            'name' => 'Nama',
             'kriteria' => 'Kriteria',
             'sub_kriteria' => 'Sub Kriteria',
             'catatan' => 'Catatan',
@@ -72,7 +72,7 @@ class DokumenRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->programStudi,
+            'user_id' => $this->department,
         ]);
     }
 }

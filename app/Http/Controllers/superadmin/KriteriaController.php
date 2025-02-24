@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\superadmin;
 
 use App\Models\Kriteria;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class KriteriaController extends Controller
 {

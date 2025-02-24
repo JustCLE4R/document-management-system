@@ -60,7 +60,7 @@ class UpdateUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'program_studi_id' => $this->prodi,
+            'department_id' => $this->department,
         ]);
     }
 }

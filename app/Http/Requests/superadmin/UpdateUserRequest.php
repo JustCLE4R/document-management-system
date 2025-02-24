@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $this->user->id,
-            'prodi' => 'required|exists:program_studis,id',
+            'department' => 'required|exists:department_ids,id',
             'role' => 'required|in:admin,user',
             'password' => 'nullable|required_with:old_password|string|min:8|confirmed',
             'password_confirmation' => 'nullable|required_with:password|string|min:8',
@@ -37,8 +37,8 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'Nama harus diisi.',
             'username.required' => 'Username harus diisi.',
             'username.unique' => 'Username sudah digunakan.',
-            'prodi.required' => 'Program Studi harus diisi.',
-            'prodi.exists' => 'Program Studi yang dipilih tidak valid.',
+            'department.required' => 'Program Studi harus diisi.',
+            'department.exists' => 'Program Studi yang dipilih tidak valid.',
             'role.required' => 'Role harus diisi.',
             'role.in' => 'Role harus admin atau user.',
             'old_password.required_with' => 'Password lama harus diisi.',
@@ -56,7 +56,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'Nama',
             'username' => 'Username',
-            'prodi' => 'Program Studi',
+            'department' => 'Program Studi',
             'role' => 'Role',
             'old_password' => 'Password Lama',
             'password' => 'Password Baru',
@@ -67,7 +67,7 @@ class UpdateUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'program_studi_id' => $this->prodi,
+            'department_id' => $this->department,
         ]);
     }
 }

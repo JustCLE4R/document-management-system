@@ -14,7 +14,7 @@
       <div class="box-link">
         <div class="box-item border wow fadeInRight" data-wow-delay="0.3s">
           <div class="text">
-            <h4 class="pe-4" style="font-size:1.2rem; ">{{ $dokumen->nama }}</h4>
+            <h4 class="pe-4" style="font-size:1.2rem; ">{{ $dokumen->name }}</h4>
             <p class="text-secondary pb-3">
               {{ __(($dokumen->kriteria > 9 ? ['Kondisi Eksternal', 'Profil Institusi', 'Analisis & Penetapan Program Pengembangan'][$dokumen->kriteria-10] : 'Kriteria '.$dokumen->kriteria)) }}
             </p>

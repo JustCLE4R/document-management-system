@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('program_studi_id')->constrained('program_studis')->onDelete('cascade');
+            $table->foreignId('department_id')->constrained('departments')->onDelete('cascade');
             $table->string('username')->unique();
             // $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();

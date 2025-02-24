@@ -37,10 +37,10 @@
     <div class="row justify-content-between pb-4">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-2 mb-md-0">
         <a href="/superadmin"  class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-chevron-double-left"></i> Kembali</a>
-        <a href="/superadmin/prodi/create" class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-plus-lg"></i> Tambah</a>
+        <a href="/superadmin/department/create" class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-plus-lg"></i> Tambah</a>
       </div>
       <div class="col-lg-5 col-md-8 col-sm-12">
-        <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/prodi" method="get">
+        <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/department" method="get">
           <div class="input-group">
             <input type="text" class="form-control shadow" name="result" placeholder="Cari Program Studi..." aria-describedby="button-addon2" value="{{ old('result', request()->input('result')) }}">
             <div class="input-group-append">
@@ -69,30 +69,30 @@
           <th>Nama</th>
           <th class="text-center">Aksi</th>
         </tr>
-        @foreach ($prodis as $prodi)
+        @foreach ($departments as $department)
           <tr>
-            <td class="text-center">{{ $prodis->firstItem() + $loop->index }}</td>
-            <td>{{ $prodi->nama }}</td>
+            <td class="text-center">{{ $departments->firstItem() + $loop->index }}</td>
+            <td>{{ $department->name }}</td>
             <td class="text-center">
-              <a class="text-primary" href="{{ route('prodi.edit', $prodi->id) }}"><i class="bi bi-pencil-square"></i></a>
+              <a class="text-primary" href="{{ route('department.edit', $department->id) }}"><i class="bi bi-pencil-square"></i></a>
 
-              <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $prodi->id }}"><i class="bi bi-trash"></i></button>
+              <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $department->id }}"><i class="bi bi-trash"></i></button>
 
-              <div class="modal fade" id="deleteModal-{{ $prodi->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $prodi->id }}" aria-hidden="true">
+              <div class="modal fade" id="deleteModal-{{ $department->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $department->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered  " role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title text-dark" id="deleteModalLabel-{{ $prodi->id }}">Konfirmasi Hapus Program Studi</h5>
+                      <h5 class="modal-title text-dark" id="deleteModalLabel-{{ $department->id }}">Konfirmasi Hapus Program Studi</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
                     <div class="modal-body d-flex justify-content-start text-dark">
-                      Apakah anda yakin ingin menghapus Program Studi "{{ $prodi->nama }}"?
+                      Apakah anda yakin ingin menghapus Program Studi "{{ $department->name }}"?
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                      <form class="d-inline" action="/superadmin/prodi/{{ $prodi->id }}" method="post">
+                      <form class="d-inline" action="/superadmin/department/{{ $department->id }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
@@ -108,7 +108,7 @@
       </table>
     </div>
     <div id="pagenation">
-      {{ $prodis->onEachSide(1)->links() }}
+      {{ $departments->onEachSide(1)->links() }}
     </div>
   </div>
   <!-- Modal -->

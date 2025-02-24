@@ -31,7 +31,7 @@
     <!-- Responsive Style -->
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 
-
+    @stack('styles')
 
 </head>
 <body>
@@ -54,8 +54,6 @@
   <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>      
   <script src="{{ asset('js/main.js') }}"></script>
   <script src="{{ asset('js/custom-toast.js') }}"></script>
-
-  
-
+  @stack('scripts')
 </body>
 </html>
