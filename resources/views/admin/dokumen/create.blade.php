@@ -29,17 +29,15 @@
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="kriteria"  class="text-dark h6" >Kriteria</label> <br>
-            <select class="form-control @error('kriteria') is-invalid @enderror" name="kriteria" id="kriteria" required>
-              @for ($i = 1; $i <= 9; $i++)
-                <option value="{{ $i }}" {{ old('kriteria') == $i ? 'selected' : '' }}>{{ 'Kriteria '. $i }}</option>
-              @endfor
-              <option value="10" {{ old('kriteria') == 10 ? 'selected' : '' }}>Kondisi Eksternal</option>
-              <option value="11" {{ old('kriteria') == 11 ? 'selected' : '' }}>Profil Institusi</option>
-              <option value="12" {{ old('kriteria') == 12 ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+            <label for="kriteria_id"  class="text-dark h6" >Kriteria</label> <br>
+            <select class="form-control @error('kriteria_id') is-invalid @enderror" name="kriteria_id" id="kriteria_id" required>
+              <option value="" hidden>Pilih Kriteria</option>
+                @foreach ($kriterias as $kriteria)
+                <option value="{{ $kriteria->id }}" {{ old('kriteria_id') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+              @endforeach
             </select>
-            @if ($errors->has('kriteria'))
-              <p class="error text-danger">{{ $errors->first('kriteria') }}</p>
+            @if ($errors->has('kriteria_id'))
+              <p class="error text-danger">{{ $errors->first('kriteria_id') }}</p>
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">

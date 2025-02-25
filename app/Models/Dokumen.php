@@ -19,4 +19,9 @@ class Dokumen extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function kriteria()
+    {
+        return $this->belongsTo(Kriteria::class);
+    }
 }

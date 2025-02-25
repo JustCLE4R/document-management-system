@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Kriteria;
 use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,12 +16,25 @@ class KriteriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $kriterias = Kriteria::where(function ($query) {
             $query->where('department_id', Auth::user()->department_id)
             ->orWhereNull('department_id');
-        })->orderBy('created_at')->paginate(10);
+        });
+
+        if ($search) {
+            $kriterias = $kriterias->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('description', 'LIKE', "%{$search}%")
+                        ->orWhere('icon', 'LIKE', "%{$search}%")
+                        ->orWhere('image', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $kriterias = $kriterias->orderBy('created_at')->paginate(10);
 
         return view('admin.kriteria.index', [
             'kriterias' => $kriterias,

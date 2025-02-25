@@ -25,7 +25,7 @@
         </select>
         @if (Auth::user()->role == 'superadmin')
           <select name="department" class="form-select p-1 bg-success text-light shadow" id="" style="max-width: 125px">
-            <option value="" selected>Program Studi</option>
+            <option value="" selected>Department</option>
             @foreach ($departments as $department)
               <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
             @endforeach
@@ -66,7 +66,7 @@
               @endif
               <h4>{{ $dokumen->name }}</h4> 
               <p class="text-secondary pb-3">
-                {{ __(($dokumen->kriteria > 9 ? ['Kondisi Eksternal', 'Profil Institusi', 'Analisis & Penetapan Program Pengembangan'][$dokumen->kriteria-10] : 'Kriteria '.$dokumen->kriteria)) }}
+                {{ $dokumen->kriteria->name }}
               </p>
               <p class="mb-4">{{ $dokumen->catatan }}</p>
               <span class="d-flex justify-content-end"><p>{{ \Carbon\Carbon::parse($dokumen->updated_at)->translatedFormat('d F Y') }}</p></span>

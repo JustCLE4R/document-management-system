@@ -15,8 +15,8 @@ class DokumenController extends Controller
         $kriteriaId = $request->query('kriteria');
         $kriteria = Kriteria::find($kriteriaId);
 
-        if (!$kriteria && $kriteriaId) {
-            return redirect('/')->with('error', 'Kriteria tidak ditemukan');
+        if ((!$kriteria && $kriteriaId) || (Auth::user()->role != 'superadmin' && $kriteria && $kriteria->department_id && $kriteria->department_id != Auth::user()->department_id)) {
+            return redirect('/')->with('error', 'Kriteria tidak ditemukan atau tidak sesuai dengan departemen pengguna');
         }
 
         $term = $request->input('result');
@@ -26,8 +26,14 @@ class DokumenController extends Controller
         $h2 = $kriteria ? $kriteria->name : 'Semua Dokumen';
 
         $dokumens = $this->search($term, $kriteriaId, $tipe, $department, 10);
-        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
-        $kriterias = Kriteria::all();
+        $departments = Department::where('id', '>', 1)->get();
+        if (Auth::user()->role == 'superadmin') {
+            $kriterias = Kriteria::all();
+        } else {
+            $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+            ->orWhereNull('department_id')
+            ->get();
+        }
 
         return view('dokumen.index', [
             'title' => 'Daftar Dokumen',
@@ -40,7 +46,7 @@ class DokumenController extends Controller
 
     public function search(string $term = null, string $kriteria = null, string $tipe = null, string $department = null, int $paginate = 6) : object
     {
-        $query = Dokumen::query();
+        $query = Dokumen::with('kriteria');
 
         if ($term) {
             $query->where(function ($query) use ($term) {
@@ -59,7 +65,7 @@ class DokumenController extends Controller
         }
 
         if ($department && Auth::user()->role == 'superadmin') {
-            $query->whereHas('user.department', function ($query ) use ($department) {
+            $query->whereHas('user.department', function ($query) use ($department) {
                 $query->where('id', $department);
             });
         } elseif (Auth::user()->role != 'superadmin') {

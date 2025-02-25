@@ -44,12 +44,9 @@
           <div class="input-group">
             <select class="form-select p-1 bg-success text-light" name="kriteria" id="" style="max-width: 90px;">
               <option value="" selected>Kriteria</option>
-              @for ($i = 1; $i <= 9; $i++)
-              <option value="{{ $i }}" {{ request()->input('kriteria') == $i ? 'selected' : '' }}>Kriteria {{ $i }}</option>
-              @endfor
-              <option value="10" {{ request()->input('kriteria') == '10' ? 'selected' : '' }}>Kondisi Eksternal</option>
-              <option value="11" {{ request()->input('kriteria') == '11' ? 'selected' : '' }}>Profil Institusi</option>
-              <option value="12" {{ request()->input('kriteria') == '12' ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+              @foreach ($kriterias as $kriteria)
+                <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+              @endforeach
             </select>
             <select class="form-select p-1 bg-success text-light" name="tipe" id="" style="max-width: 80px;">
               <option value="" selected>Tipe</option>
@@ -80,7 +77,7 @@
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
             <td><a class="text-success" href="/admin/dokumen/{{ $dokumen->id }}">{{ $dokumen->name }}</a></td>
-            <td class="text-center">{{ $dokumen->kriteria }}</td>
+            <td class="text-center">{{ $dokumen->kriteria->name }}</td>
             <td>{{ $dokumen->sub_kriteria }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>
             <td class="text-center">

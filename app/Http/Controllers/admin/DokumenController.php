@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\admin\DokumenRequest;
 use App\Http\Requests\admin\UpdateDokumenRequest;
 use App\Http\Controllers\DokumenController as PublicDokumenController;
+use App\Models\Kriteria;
 
 class DokumenController extends Controller
 {
@@ -23,10 +24,14 @@ class DokumenController extends Controller
         $tipe = $request->input('tipe');
 
         $dokumens = (new PublicDokumenController)->search($term, $kriteria, $tipe, 10);
+        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+                        ->orWhereNull('department_id')
+                        ->get();
 
         return view('admin.dokumen.index', [
             'title' => 'Admin Daftar Dokumen',
             'dokumens' => $dokumens,
+            'kriterias' => $kriterias
         ]);
     }
 
@@ -36,10 +41,14 @@ class DokumenController extends Controller
     public function create()
     {
         $shareables = Dokumen::where('status', 'share')->get();
+        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+                        ->orWhereNull('department_id')
+                        ->get();
 
         return view('admin.dokumen.create', [
             'title' => 'Admin Tambah Dokumen',
-            'shareables' => $shareables
+            'shareables' => $shareables,
+            'kriterias' => $kriterias
         ]);
     }
 
@@ -92,11 +101,15 @@ class DokumenController extends Controller
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
         $shareables = Dokumen::where('status', 'share')->get();
+        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+        ->orWhereNull('department_id')
+        ->get();
 
         return view('admin.dokumen.edit', [
             'title' => 'Admin Edit Dokumen',
             'dokumen' => $dokumen,
-            'shareables' => $shareables
+            'shareables' => $shareables,
+            'kriterias' => $kriterias
         ]);
     }
 
@@ -108,7 +121,7 @@ class DokumenController extends Controller
         if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
-        $prepareData = $request->only(['name', 'kriteria', 'sub_kriteria', 'catatan']);
+        $prepareData = $request->only(['name', 'kriteria_id', 'sub_kriteria', 'catatan']);
 
         if ($request->hasFile('file')) {
             $prepareData['status'] ='private';

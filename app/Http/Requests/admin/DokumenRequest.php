@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\admin;
 
+use App\Models\Kriteria;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +25,23 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'kriteria' => 'required|numeric|between:1,12',
+            'kriteria_id' => [
+                'required',
+                'exists:kriterias,id',
+                function ($attribute, $value, $fail) {
+                    $kriteria = Kriteria::where('id', $value)
+                        ->where(function ($query) {
+                            $query->whereHas('department', function ($query) {
+                                $query->where('id', Auth::user()->department_id);
+                            })->orWhereNull('department_id');
+                        })
+                        ->first();
+
+                    if (!$kriteria) {
+                        $fail('The selected ' . $attribute . ' is invalid.');
+                    }
+                },
+            ],
             'sub_kriteria' => 'max:255',
             'catatan' => 'max:255',
             'file' => 'required_without_all:url,shareable|mimes:pdf,png,jpg,jpeg|max:102400',
@@ -40,7 +57,6 @@ class DokumenRequest extends FormRequest
             'mimes' => ':attribute harus berupa PDF atau gambar',
             'max' => ':attribute maksimal :max karakter',
             'numeric' => ':attribute harus berupa angka',
-            'between' => ':attribute harus diantara 1 sampai 9',
             'required_without_all' => ':attribute harus diisi jika :values tidak diisi',
             'url' => ':attribute harus berupa URL yang valid',
             'exists' => ':attribute yang dipilih tidak valid',
@@ -51,7 +67,7 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'kriteria' => 'Kriteria',
+            'kriteria_id' => 'Kriteria',
             'sub_kriteria' => 'Sub Kriteria',
             'catatan' => 'Catatan',
             'file' => 'File',

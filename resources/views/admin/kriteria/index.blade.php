@@ -56,7 +56,7 @@
         <tr>
           <th class="text-center">No</th>
           <th>Nama</th>
-          <th class="text-center">Deskripsi</th>
+          <th>Deskripsi</th>
           <th class="text-center">Ikon</th>
           <th class="text-center">Gambar</th>
           <th class="text-center">Aksi</th>
@@ -65,7 +65,7 @@
           <tr>
             <td class="text-center">{{ $key + 1 }}</td>
             <td>{{ $kriteria->name }}</td>
-            <td class="text-center">{{ $kriteria->description }}</td>
+            <td>{{ $kriteria->description }}</td>
             <td class="text-center">
               <i class="bi bi-{{ $kriteria->icon }}"></i>
               {{ $kriteria->icon }}

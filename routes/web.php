@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\DokumenController as AdminDokumenController;
 use App\Http\Controllers\admin\KriteriaController as AdminKriteriaController;
 use App\Http\Controllers\superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\superadmin\DokumenController as SuperadminDokumenController;
+use App\Http\Controllers\superadmin\KriteriaController as SuperAdminKriteriaController;
 use App\Http\Controllers\superadmin\DepartmentController as SuperadminDepartmentController;
 
 Route::middleware(['guest', 'no-cache', 'security-header'])->group(function () {
@@ -33,5 +34,6 @@ Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-head
     Route::view('/', 'superadmin.index');
     Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen']);
     Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show']);
+    Route::resource('/kriteria', SuperAdminKriteriaController::class)->parameters(['kriteria' => 'kriteria'])->names('superadmin.kriteria');
     Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show']);
 });

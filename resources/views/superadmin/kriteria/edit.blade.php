@@ -7,7 +7,7 @@
         <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
     </div>
     <div class="container border rounded shadow" style="width:70%;">
-        <form action="/admin/kriteria/{{ $kriteria->id }}" id="form" method="POST" enctype="multipart/form-data">
+        <form action="/superadmin/kriteria/{{ $kriteria->id }}" id="form" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="row justify-content-between align-items-center p-3">
@@ -106,7 +106,7 @@
                     @endif
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between">
-                    <a href="/admin/kriteria" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i
+                    <a href="/superadmin/kriteria" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i
                             class="bi bi-chevron-double-left"></i> Kembali</a>
                     <button class="btn btn-success mx-1 wow fadeInRight" type="submit"><i class="bi bi-check-lg"></i>
                         Update</button>

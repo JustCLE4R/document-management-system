@@ -82,7 +82,7 @@
                             id="image" accept="image/*">
                         <div class="input-group-append">
                             <span class="input-group-text" data-toggle="tooltip" data-placement="right"
-                                title="Gambar terbaik dengan rasio 1:1">
+                                title="Gambar terbaik dengan rasio 2:1">
                                 <i class="bi bi-info-circle"></i>
                             </span>
                         </div>

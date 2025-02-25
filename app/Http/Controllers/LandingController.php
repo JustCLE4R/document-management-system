@@ -11,11 +11,15 @@ class LandingController extends Controller
 {
     public function index(){
         $dokumenCount = Dokumen::query();
-        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
-        $kriterias = Kriteria::where(function ($query) {
+        $departments = Department::where('id', '>', 1)->get();
+        if (Auth::user()->role == 'superadmin') {
+            $kriterias = Kriteria::all();
+        } else {
+            $kriterias = Kriteria::where(function ($query) {
             $query->where('department_id', Auth::user()->department->id)
                 ->orWhereNull('department_id');
-        })->get();
+            })->get();
+        }
 
         if (Auth::user()->role == 'superadmin') {
             $dokumenCount = $dokumenCount->count();

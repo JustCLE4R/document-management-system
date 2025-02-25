@@ -1,49 +1,77 @@
 <?php
 namespace App\Http\Requests\admin;
 
+use App\Models\Kriteria;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateDokumenRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|max:255',
-            'kriteria' => 'required|numeric|between:1,12',
+            'kriteria_id' => [
+                'required',
+                'exists:kriterias,id',
+                function ($attribute, $value, $fail) {
+                    $kriteria = Kriteria::where('id', $value)
+                        ->where(function ($query) {
+                            $query->whereHas('department', function ($query) {
+                                $query->where('id', Auth::user()->department_id);
+                            })->orWhereNull('department_id');
+                        })
+                        ->first();
+
+                    if (!$kriteria) {
+                        $fail('The selected ' . $attribute . ' is invalid.');
+                    }
+                },
+
+            ],
             'sub_kriteria' => 'max:255',
             'catatan' => 'max:255',
             'file' => 'nullable|mimes:pdf,png,jpg,jpeg|max:102400|prohibits:url',
             'url' => 'nullable|url|max:255|prohibits:file',
+            'shareable' => 'nullable|exists:dokumens,id',
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'required' => ':attribute wajib diisi!',
             'mimes' => ':attribute harus berupa PDF atau gambar',
             'max' => ':attribute maksimal :max karakter',
             'numeric' => ':attribute harus berupa angka',
-            'between' => ':attribute harus diantara 1 sampai 9',
             'prohibits' => 'Hanya isi salah satu (File/URL)',
             'url' => ':attribute harus berupa URL yang valid',
+            'exists' => ':attribute yang dipilih tidak valid',
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'name' => 'Nama',
-            'kriteria' => 'Kriteria',
+            'kriteria_id' => 'Kriteria',
             'sub_kriteria' => 'Sub Kriteria',
             'catatan' => 'Catatan',
             'file' => 'File',
             'url' => 'URL',
+            'shareable' => 'Shareable',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => Auth::user()->id,
+        ]);
     }
 }
