@@ -22,12 +22,9 @@
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
           <label for="kriteria"  class=" text-dark h6" >Kriteria</label> <br>
           <select class="form-control @error('kriteria') is-invalid @enderror" name="kriteria" id="kriteria" required>
-            @for ($i = 1; $i <= 9; $i++)
-              <option value="{{ $i }}" {{ old('kriteria', $dokumen->kriteria) == $i ? 'selected' : '' }}>{{ 'Kriteria '. $i }}</option>
-            @endfor
-            <option value="10" {{ old('kriteria', $dokumen->kriteria) == 10 ? 'selected' : '' }}>Kondisi Eksternal</option>
-            <option value="11" {{ old('kriteria', $dokumen->kriteria) == 11 ? 'selected' : '' }}>Profil Institusi</option>
-            <option value="12" {{ old('kriteria', $dokumen->kriteria) == 12 ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+            @foreach ($kriterias as $kriteria)
+              <option value="{{ $kriteria->id }}" {{ $dokumen->kriteria_id == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+            @endforeach
           </select>
           @if ($errors->has('kriteria'))
             <p class="error text-danger">{{ $errors->first('kriteria') }}</p>
@@ -41,7 +38,7 @@
           @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="Departments" class=" text-dark h6" >Program Studi</label>
+          <label for="Departments" class=" text-dark h6" >Departemen</label>
           <select class="form-control @error('Departments') is-invalid @enderror" name="Departments" id="Departments" disabled>
             @foreach ($departments as $department)
               <option value="{{ $department->id }}" {{ old('Departments', $dokumen->user->department->id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
@@ -73,7 +70,7 @@
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
           <div class="mb-3">
             <label class="text-dark h6" for="file">File</label>
-            <input class="form-control @error('file') is-invalid @enderror" type="file" name="file" id="file" disabled>
+            <input class="form-control @error('file') is-invalid @enderror" type="file" name="file" id="file">
           </div>                     
           @if ($errors->has('file'))
           <p class="error text-danger">{{ $errors->first('file') }}</p>
@@ -81,7 +78,7 @@
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
           <label class=" text-dark h6" for="url">URL</label>
-          <input class="form-control @error('url') is-invalid @enderror" type="text" name="url" id="url" value="{{ $dokumen->tipe == 'URL' ? old('url', $dokumen->path) : '' }}" disabled>
+          <input class="form-control @error('url') is-invalid @enderror" type="text" name="url" id="url" value="{{ $dokumen->tipe == 'URL' ? old('url', $dokumen->path) : '' }}">
           @if ($errors->has('url'))
             <p class="error text-danger">{{ $errors->first('url') }}</p>
           @endif
@@ -111,13 +108,14 @@
     </form>
     
   </div>
+  @push('scripts')
   <script>
     const setValue = (value) => {
       const fileInput = document.getElementById('file');
       const urlInput = document.getElementById('url');
-      const shareableInput = document.getElementById('shareable');
-      
-      fileInput.required = value === 'file';
+      const fileExists = "{{ $dokumen->path }}";
+
+      fileInput.required = value === 'file' && !fileExists;
       urlInput.required = value === 'url';
       fileInput.disabled = value !== 'file';
       urlInput.disabled = value !== 'url';
@@ -133,7 +131,6 @@
       document.getElementById('preview').innerHTML = '';
       document.getElementById('file').value = '';
       document.getElementById('url').value = '';
-      document.getElementById('shareable').selectedIndex = 0;
       setValue(value);
     });
 
@@ -146,5 +143,6 @@
       reader.readAsDataURL(file);
     });
   </script>
+  @endpush
 </section>
 @endsection

@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
-            'department' => 'required|exists:department_ids,id',
+            'department' => 'required|exists:departments,id',
             'role' => 'required|in:admin,user',
             'password' => 'required|string|min:8|confirmed',
         ];

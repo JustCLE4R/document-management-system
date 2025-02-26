@@ -26,7 +26,7 @@ class DokumenController extends Controller
         $h2 = $kriteria ? $kriteria->name : 'Semua Dokumen';
 
         $dokumens = $this->search($term, $kriteriaId, $tipe, $department, 10);
-        $departments = Department::where('id', '>', 1)->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
         if (Auth::user()->role == 'superadmin') {
             $kriterias = Kriteria::all();
         } else {
@@ -46,7 +46,7 @@ class DokumenController extends Controller
 
     public function search(string $term = null, string $kriteria = null, string $tipe = null, string $department = null, int $paginate = 6) : object
     {
-        $query = Dokumen::with('kriteria');
+        $query = Dokumen::with(['kriteria', 'user.department'])->newQuery();
 
         if ($term) {
             $query->where(function ($query) use ($term) {

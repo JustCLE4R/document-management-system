@@ -24,10 +24,12 @@
           <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
         </select>
         @if (Auth::user()->role == 'superadmin')
-          <select name="department" class="form-select p-1 bg-success text-light shadow" id="" style="max-width: 125px">
-            <option value="" selected>Department</option>
+          <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 125px">
+            <option value="" selected>Departemen</option>
             @foreach ($departments as $department)
-              <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+              <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+              {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+              </option>
             @endforeach
           </select>
         @endif

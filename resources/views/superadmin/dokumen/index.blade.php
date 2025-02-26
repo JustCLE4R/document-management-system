@@ -24,16 +24,6 @@
         @endif
     </div>
 </div>
-
-<script>
-    setTimeout(function() {
-        $('.alert').fadeTo(500, 0).slideUp(500, function(){
-            $(this).remove(); 
-        });
-    }, 5000);
-</script>
-
-
   <div class="container border rounded shadow p-4" style="width:90%;">
     <div class="row justify-content-between pb-4">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-2 mb-md-0">
@@ -43,14 +33,11 @@
       <div class="col-lg-5 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/dokumen" method="get">
           <div class="input-group">
-            <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="max-width: 90px;">
+            <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 90px;">
               <option value="" selected>Kriteria</option>
-              @for ($i = 1; $i <= 9; $i++)
-              <option value="{{ $i }}" {{ request()->input('kriteria') == $i ? 'selected' : '' }}>Kriteria {{ $i }}</option>
-              @endfor
-              <option value="10" {{ request()->input('kriteria') == '10' ? 'selected' : '' }}>Kondisi Eksternal</option>
-              <option value="11" {{ request()->input('kriteria') == '11' ? 'selected' : '' }}>Profil Institusi</option>
-              <option value="12" {{ request()->input('kriteria') == '12' ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+              @foreach ($kriterias as $kriteria)
+              <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+              @endforeach
             </select>
             <select class="form-select p-1 bg-success text-light shadow" name="tipe" id="" style="max-width: 80px;">
               <option value="" selected>Tipe</option>
@@ -58,10 +45,12 @@
               <option value="PDF" {{ request()->input('tipe') == 'PDF' ? 'selected' : '' }}>PDF</option>
               <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
             </select>
-            <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 70px">
-              <option value="" selected>Prodi</option>
+            <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 125px">
+              <option value="" selected>Departemen</option>
               @foreach ($departments as $department)
-                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+                {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+                </option>
               @endforeach
             </select>
             <input type="text" class="form-control shadow" name="result" placeholder="Cari Dokumen.." aria-describedby="button-addon2" value="{{ old('result', request()->input('result')) }}">
@@ -73,6 +62,7 @@
       </div>
     </div>
 
+    @push('scripts')
     <script>
       document.querySelector('form').addEventListener('submit', function(event) {
         const inputs = this.querySelectorAll('select, input[name="result"]');
@@ -82,8 +72,15 @@
           }
         });
       });
+
+      setTimeout(function() {
+          $('.alert').fadeTo(500, 0).slideUp(500, function(){
+              $(this).remove(); 
+          });
+      }, 5000);
     </script>
-    
+    @endpush
+
     <div class="col-12" style="overflow-x: auto">
       <table class="table table-hover">
         <tr>
@@ -99,7 +96,7 @@
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
             <td><a class="text-success" href="{{ route('dokumen.show', $dokumen->id) }}">{{ $dokumen->name }}</a></td>
-            <td class="text-center">{{ $dokumen->kriteria }}</td>
+            <td class="text-center">{{ $dokumen->kriteria->name }}</td>
             <td>{{ $dokumen->sub_kriteria }}</td>
             <td>{{ $dokumen->user->department->name }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>

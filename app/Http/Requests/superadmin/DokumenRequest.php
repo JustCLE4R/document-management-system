@@ -26,7 +26,7 @@ class DokumenRequest extends FormRequest
             'name' => 'required|max:255',
             'kriteria' => 'required|numeric|between:1,12',
             'sub_kriteria' => 'max:255',
-            'Departments' => 'required|exists:department_ids,id',
+            'Departments' => 'required|exists:departments,id',
             'status' => 'required|in:private,share,borrow',
             'catatan' => 'max:255',
             'file' => 'required_without_all:url|mimes:pdf,png,jpg,jpeg|max:102400',
@@ -72,7 +72,7 @@ class DokumenRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'user_id' => $this->department,
+            'user_id' => $this->Departments,
         ]);
     }
 }

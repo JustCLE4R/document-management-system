@@ -32,9 +32,11 @@ class KriteriaController extends Controller
         }
 
         $kriterias = $kriterias->orderBy('created_at')->paginate(10);
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.kriteria.index', [
             'kriterias' => $kriterias,
+            'departments' => $departments
         ]);
     }
 
@@ -78,7 +80,7 @@ class KriteriaController extends Controller
      */
     public function edit(Kriteria $kriteria)
     {
-        $departments = Department::all();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.kriteria.edit', [
             'title' => 'Admin Edit Kriteria',

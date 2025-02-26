@@ -13,6 +13,12 @@ class DepartmentsSeeder extends Seeder
      */
     public function run(): void
     {
+        Department::insert([
+            'name' => 'UINSU',
+            'type' => 'faculty',
+            'parent_id' => null,
+        ]);
+
         // Load JSON file
         $json = File::get(storage_path('json/departments.json'));
         $departments = json_decode($json, true);

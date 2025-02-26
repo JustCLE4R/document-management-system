@@ -36,47 +36,41 @@
         @endpush
         <div class="row justify-content-center">
             <!-- Services item start -->
-            <div class="col-md-6 col-lg-4 col-xs-12">
-                <a class="h4 text-success" href="/superadmin/dokumen">
+            <div class="col-md-6 col-lg-4 col-xs-12"  onclick="window.location.href='/superadmin/dokumen'">
                     <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.3s">
                         <div class="icon">
                             <i class="lni-cog"></i>
                         </div>
                         <div class="services-content ">
-                            <span><a class="h4 text-success" href="/superadmin/dokumen">Dokumen</a></span>
+                            <span class="h4 text-success">Dokumen</span>
                         </div>
                     </div>
-                </a>
             </div>
             <!-- Services item end -->
 
             <!-- Services item start -->
-            <div class="col-md-6 col-lg-4 col-xs-12">
-                <a href="/superadmin/department">
+            <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/department'">
                     <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.6s">
                         <div class="icon">
                             <i class="bi bi-building-gear"></i>
                         </div>
                         <div class="services-content">
-                            <span><a class="h4 text-success" href="/superadmin/department">Department</a></span>
+                            <span class="h4 text-success">Department</span>
                         </div>
                     </div>
-                </a>
             </div>
             <!-- Services item end -->
 
             <!-- Services item start -->
-            <div class="col-md-6 col-lg-4 col-xs-12">
-                <a href="/superadmin/user">
+            <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/user'">
                     <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.9s">
                         <div class="icon">
                             <i class="bi bi-person-gear"></i>
                         </div>
                         <div class="services-content">
-                            <span><a class="h4 text-success" href="/superadmin/user">Akun</a></span>
+                            <span class="h4 text-success">Akun</span>
                         </div>
                     </div>
-                </a>
             </div>
 
             <!-- Services item end -->

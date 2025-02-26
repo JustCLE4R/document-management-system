@@ -22,12 +22,9 @@
             <label for="kriteria"  class="text-dark h6" >Kriteria</label> <br>
             <select class="form-control @error('kriteria') is-invalid @enderror" name="kriteria" id="kriteria" required>
               <option hidden disabled selected>Pilih Kriteria</option>
-              @for ($i = 1; $i <= 9; $i++)
-                <option value="{{ $i }}" {{ old('kriteria') == $i ? 'selected' : '' }}>{{ 'Kriteria '. $i }}</option>
-              @endfor
-              <option value="10" {{ old('kriteria') == 10 ? 'selected' : '' }}>Kondisi Eksternal</option>
-              <option value="11" {{ old('kriteria') == 11 ? 'selected' : '' }}>Profil Institusi</option>
-              <option value="12" {{ old('kriteria') == 12 ? 'selected' : '' }}>Analisis & Penetapan Program Pengembangan</option>
+              @foreach ($kriterias as $kriteria)
+                <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+              @endforeach
             </select>
             @if ($errors->has('kriteria'))
               <p class="error text-danger">{{ $errors->first('kriteria') }}</p>
@@ -41,9 +38,9 @@
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="Departments" class="text-dark h6" >Program Studi</label>
+          <label for="Departments" class="text-dark h6" >Departemen</label>
           <select class="form-control @error('Departments') is-invalid @enderror" name="Departments" id="Departments" required>
-            <option hidden disabled selected>Pilih Program Studi</option>
+            <option hidden disabled selected>Pilih Departemen</option>
             @foreach ($users as $user)
               <option value="{{ $user->id }}" {{ old('Departments') == $user->id ? 'selected' : '' }}>{{ $user->department->name }}</option>
             @endforeach

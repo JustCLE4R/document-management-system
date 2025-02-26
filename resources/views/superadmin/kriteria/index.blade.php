@@ -43,9 +43,17 @@
             </div>
             <div class="col-lg-4 col-md-8 col-sm-12">
                 <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/kriteria" method="get">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
+                        <select class="custom-select p-1 bg-success text-light shadow" name="department" id="" style="height: 38px;">
+                        <option value="" selected>Departemen</option>
+                            @foreach ($departments as $department)
+                            <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+                            {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+                            </option>
+                            @endforeach
+                        </select>
                         <input class="form-control shadow" type="search" placeholder="Cari Kriteria" aria-label="Search"
-                            name="search" value="{{ request('search') }}">
+                            name="search" value="{{ request('search') }}" style="height: 38px;">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" id="button-addon2"><i
                                     class="bi bi-search"></i></button>
@@ -65,9 +73,9 @@
                     <th class="text-center">Gambar</th>
                     <th class="text-center">Aksi</th>
                 </tr>
-                @foreach ($kriterias as $key => $kriteria)
+                @foreach ($kriterias as $kriteria)
                 <tr>
-                    <td class="text-center">{{ $key + 1 }}</td>
+                    <td class="text-center">{{ $kriterias->firstItem() + $loop->index }}</td>
                     <td>{{ $kriteria->name }}</td>
                     <td>{{ $kriteria->description }}</td>
                     <td class="text-center">

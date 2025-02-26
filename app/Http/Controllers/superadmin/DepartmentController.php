@@ -5,6 +5,8 @@ namespace App\Http\Controllers\superadmin;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\superadmin\DeparmentRequest;
+use App\Http\Requests\superadmin\UpdateDepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -28,28 +30,23 @@ class DepartmentController extends Controller
      */
     public function create()
     {
+        $faculties = Department::where('type', 'faculty')->get();
+
         return view('superadmin.department.create', [
             'title' => 'Super Admin Tambah Department',
+            'faculties' => $faculties
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DeparmentRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ],
-        [
-            'name.required' => 'Department harus diisi',
-        ],
-        [
-            'name' => 'Department',
-        ]);
-
         Department::create([
             'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'parent_id' => $request->input('parent_id'),
         ]);
 
         return redirect('/superadmin/department')->with('success', 'Department <b>' . $request->input('name') . '</b> berhasil ditambahkan!');
@@ -60,29 +57,24 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+        $faculties = Department::where('type', 'faculty')->get();
+
         return view('superadmin.department.edit', [
             'title' => 'Super Admin Edit Department',
-            'department' => $department
+            'department' => $department,
+            'faculties' => $faculties
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Department $department)
+    public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        $request->validate([
-            'name' => 'required',
-        ],
-        [
-            'name.required' => 'Department harus diisi',
-        ],
-        [
-            'name' => 'Department',
-        ]);
-
         $department->update([
             'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'parent_id' => $request->input('parent_id'),
         ]);
 
         return redirect('/superadmin/department')->with('success', 'Department <b>' . $department->name . '</b> berhasil diperbarui!');
@@ -100,9 +92,9 @@ class DepartmentController extends Controller
 
     private function search(string $term = null, int $paginate = 6) : object
     {
-        $query = Department::query();
-
-        $query->where('id', '!=', 1);
+        $query = Department::with('parent')
+            ->orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")
+            ->newQuery();
 
         if ($term) {
             $query->where('name', 'like', "%{$term}%");

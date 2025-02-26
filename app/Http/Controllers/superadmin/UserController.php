@@ -20,7 +20,7 @@ class UserController extends Controller
         $prodiSearch = request()->input('department');
         $roleSearch = request()->input('role');
 
-        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         $users = $this->search($prodiSearch, $roleSearch, 10)->withQueryString();
         
@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.akun.create', [
             'title' => 'Super Admin Tambah User',
@@ -67,7 +67,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $departments = Department::where('id', '>', 1)->orderBy('name', 'asc')->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.akun.edit', [
             'title' => 'Super Admin Edit User',
@@ -112,8 +112,6 @@ class UserController extends Controller
 
     private function search(int $department = null, string $role = null,  int $paginate = 10){
         $query = User::query();
-
-        $query->where('id', '>', 1);
 
         if ($department) {
             $query->where('department_id', $department);

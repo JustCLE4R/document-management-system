@@ -20,4 +20,14 @@ class Department extends Model
     {
         return $this->hasMany(Kriteria::class);
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Department::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Department::class, 'parent_id');
+    }
 }

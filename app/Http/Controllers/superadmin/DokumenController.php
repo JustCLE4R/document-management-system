@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\superadmin\DokumenRequest;
 use App\Http\Requests\superadmin\UpdateDokumenRequest;
+use App\Models\Kriteria;
 
 class DokumenController extends Controller
 {
@@ -25,12 +26,14 @@ class DokumenController extends Controller
 
         $dokumens = $this->search($term, $kriteria, $tipe, $department, 10);
 
-        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
+        $kriterias = Kriteria::all();
 
         return view('superadmin.dokumen.index', [
             'title' => 'Super Admin Daftar Dokumen',
             'dokumens' => $dokumens,
             'departments' => $departments,
+            'kriterias' => $kriterias
         ]);
     }
 
@@ -39,12 +42,12 @@ class DokumenController extends Controller
      */
     public function create()
     {
-        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
+        $kriterias = Kriteria::all();
         $users = User::where('role', '!=', 'user')->get()->unique('department_id');
 
         return view('superadmin.dokumen.create', [
             'title' => 'Super Admin Tambah Dokumen',
-            'departments' => $departments,
+            'kriterias' => $kriterias,
             'users' => $users
         ]);
     }
@@ -54,19 +57,21 @@ class DokumenController extends Controller
      */
     public function store(DokumenRequest $request)
     {
-        $data = $request->all();
+        $prepareData = $request->all();
 
         if ($request->hasFile('file')) {
-            $data['tipe'] = str_contains($request->file('file')->getMimeType(), 'pdf') ? 'PDF' : 'Image';
-            $data['path'] = $request->file('file')->store('dokumen');
+            $prepareData['tipe'] = str_contains($request->file('file')->getMimeType(), 'pdf') ? 'PDF' : 'Image';
+            $prepareData['path'] = $request->file('file')->store('dokumen');
         } else {
-            $data['tipe'] = 'URL';
-            $data['path'] = $data['url'];
+            $prepareData['tipe'] = 'URL';
+            $prepareData['path'] = $prepareData['url'];
         }
 
-        Dokumen::create($data);
+        $prepareData['kriteria_id'] = $prepareData['kriteria'];
 
-        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $data['name'] . '</b> berhasil ditambahkan');
+        Dokumen::create($prepareData);
+
+        return redirect('/superadmin/dokumen')->with('success', 'Dokumen <b>' . $prepareData['name'] . '</b> berhasil ditambahkan');
     }
 
     /**
@@ -85,12 +90,14 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen)
     {
-        $departments = Department::orderByRaw("id = 1 desc, nama asc")->get();
+        $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
+        $kriterias = Kriteria::all();
 
         return view('superadmin.dokumen.edit', [
             'departments' => $departments,
             'title' => 'Super Admin Edit Dokumen',
-            'dokumen' => $dokumen
+            'dokumen' => $dokumen,
+            'kriterias' => $kriterias
         ]);
     }
 
@@ -149,7 +156,7 @@ class DokumenController extends Controller
         }
 
         if ($kriteria) 
-            $query->where('kriteria', $kriteria);
+            $query->where('kriteria_id', $kriteria);
 
         if ($tipe) 
             $query->where('tipe', $tipe);

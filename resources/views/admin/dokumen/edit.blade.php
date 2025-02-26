@@ -115,8 +115,9 @@
       const fileInput = document.getElementById('file');
       const urlInput = document.getElementById('url');
       const shareableInput = document.getElementById('shareable');
+      const fileExists = "{{ $dokumen->path }}";
       
-      fileInput.required = value === 'file';
+      fileInput.required = value === 'file' && !fileExists;
       urlInput.required = value === 'url';
       shareableInput.required = value === 'shareable';
       fileInput.disabled = value !== 'file';

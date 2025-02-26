@@ -25,11 +25,13 @@
           @endif
       </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-            <label for="department" class="text-dark h6">Program Studi</label> <br>
+            <label for="department" class="text-dark h6">Departemen</label> <br>
             <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
-              <option value="" selected>Pilih Program Studi</option>
+              <option value="" selected>Pilih Departemen</option>
               @foreach ($departments as $department)
-                <option value="{{ $department->id }}" {{ old('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+              <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+                {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+              </option>
               @endforeach
             </select>
             @if ($errors->has('department'))

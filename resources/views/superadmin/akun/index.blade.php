@@ -43,10 +43,12 @@
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/user" method="get">
           <div class="input-group">
             <select class="custom-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 200px;;">
-              <option value="" selected>Program Studi</option>
-              @foreach ($departments as $department)
-                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
-              @endforeach
+              <option value="" selected>Departemen</option>
+                @foreach ($departments as $department)
+                <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+                  {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+                </option>
+                @endforeach
             </select>
             <select class="custom-select p-1 bg-success text-light shadow" name="role" id="">
               <option value="" selected>Role</option>
@@ -65,13 +67,17 @@
       <table class="table table-hover">
         <tr>
           <th class="text-center">No</th>
-          <th>Program Studi</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Departemen</th>
           <th class="text-center">Role</th>
           <th class="text-center">Aksi</th>
         </tr>
         @foreach ($users as $user)
           <tr>
             <td class="text-center">{{ $users->firstItem() + $loop->index }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->username }}</td>
             <td>{{ $user->department->name }}</td>
             <td class="text-center">{{ $user->role }}</td>
             <td class="text-center">

@@ -4,7 +4,7 @@
 
 <section class="section-padding" style="margin-top: 3rem;">
   <div class="section-header text-center">
-    <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Program Studi</h2>
+    <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Departemen</h2>
     <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
   </div>
   
@@ -42,7 +42,7 @@
       <div class="col-lg-5 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/department" method="get">
           <div class="input-group">
-            <input type="text" class="form-control shadow" name="result" placeholder="Cari Program Studi..." aria-describedby="button-addon2" value="{{ old('result', request()->input('result')) }}">
+            <input type="text" class="form-control shadow" name="result" placeholder="Cari Departemen..." aria-describedby="button-addon2" value="{{ old('result', request()->input('result')) }}">
             <div class="input-group-append">
               <button class="btn btn-search" id="button-addon2"><i class="bi bi-search"></i></button>
             </div>
@@ -51,6 +51,7 @@
       </div>
     </div>
 
+    @push('scripts')
     <script>
       document.querySelector('form').addEventListener('submit', function(event) {
         const inputs = this.querySelectorAll('select, input[name="result"]');
@@ -61,23 +62,26 @@
         });
       });
     </script>
+    @endpush
     
     <div class="col-12" style="overflow-x: auto">
       <table class="table table-hover">
         <tr>
           <th class="text-center">No</th>
           <th>Nama</th>
+          <th class="text-center">Type</th>
+          <th>Parent</th>
           <th class="text-center">Aksi</th>
         </tr>
         @foreach ($departments as $department)
           <tr>
             <td class="text-center">{{ $departments->firstItem() + $loop->index }}</td>
             <td>{{ $department->name }}</td>
+            <td class="text-center">{{ $department->type }}</td>
+            <td>{{ $department->parent ? $department->parent->name : '-' }}</td>
             <td class="text-center">
               <a class="text-primary" href="{{ route('department.edit', $department->id) }}"><i class="bi bi-pencil-square"></i></a>
-
               <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $department->id }}"><i class="bi bi-trash"></i></button>
-
               <div class="modal fade" id="deleteModal-{{ $department->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $department->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered  " role="document">
                   <div class="modal-content">
@@ -91,17 +95,16 @@
                       Apakah anda yakin ingin menghapus Program Studi "{{ $department->name }}"?
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                       <form class="d-inline" action="/superadmin/department/{{ $department->id }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
                       </form>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                     </div>
                   </div>
                 </div>
               </div>
-
             </td>
           </tr>
         @endforeach

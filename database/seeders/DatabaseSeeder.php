@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
 
         $this->createUser('Super Admin', 'superadmin', 'superadmin', 'superadmin', 1);
 
-        $this->createUser('Admin Ilkomp', 'adminilkomp', 'adminilkomp', 'admin', 54);
-        $this->createUser('User Ilkomp', 'userilkomp', 'userilkomp', 'user', 54);
-        $this->createUser('Admin Manajemen', 'adminmanajemen', 'adminmanajemen', 'admin', 12);
-        $this->createUser('User Manajemen', 'usermanajemen', 'usermanajemen', 'user', 12);
+        $this->createUser('Admin Ilkomp', 'adminilkomp', 'adminilkomp', 'admin', 55);
+        $this->createUser('User Ilkomp', 'userilkomp', 'userilkomp', 'user', 55);
+        $this->createUser('Admin Manajemen', 'adminmanajemen', 'adminmanajemen', 'admin', 13);
+        $this->createUser('User Manajemen', 'usermanajemen', 'usermanajemen', 'user', 13);
 
         $this->call(KriteriaSeeder::class);
 

@@ -25,8 +25,12 @@
                 
             @endif
           </h4>
-          <h2 class="head-title wow fadeInRight" ata-wow-delay="0.3s">Selamat Datang di Website Pusat Data Akreditasi Prodi</h2>
-          <p class=" wow fadeInRight" ata-wow-delay="0.3s">Pusat Data Bukti Fisik Pendukung Akreditasi Prodi Universitas Islam Negeri Sumatera Utara Medan</p>
+          <h2 class="head-title wow fadeInRight" ata-wow-delay="0.3s">
+            Selamat Datang di Sistem Manajemen Dokumen UINSU
+          </h2>
+          <p class="wow fadeInRight" ata-wow-delay="0.3s">
+              Platform Terpusat untuk Pengelolaan dan Akses Dokumen Akademik Universitas Islam Negeri Sumatera Utara
+          </p>        
           <div class="header-button wow fadeInRight" ata-wow-delay="0.5s">
             <form class="d-inline" action="/daftar-dokumen" method="get">
               <div class="input-group mb-3">
@@ -43,10 +47,12 @@
                   <option value="Image" {{ request()->input('tipe') == 'Image' ? 'selected' : '' }}>Image</option>
                 </select>
                 @if (Auth::user()->role == 'superadmin')
-                  <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 70px">
-                    <option value="" selected>Prodi</option>
+                  <select class="form-select p-1 bg-success text-light shadow" name="department" id="" style="max-width: 125px">
+                    <option value="" selected>Departemen</option>
                     @foreach ($departments as $department)
-                      <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                      <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+                      {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
+                      </option>
                     @endforeach
                   </select>
                 @endif
@@ -490,8 +496,7 @@
   </div>
 </section>
 
-
-
+@push('scripts')
 <script src="/js/glightbox.min.js"></script>
 <script src="/js/tiny-slider.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -620,10 +625,10 @@ $(document).ready(function() {
       }, stepTime);
     }
   
-    animateValue('kriteriaCounter', 0, 9, 2000);
+    animateValue('kriteriaCounter', 0, {{ $kriteriaCount }}, 2000);
     animateValue('dokumenCounter', 0, {{ $dokumenCount }}, 2000);
-    animateValue('fakultasCounter', 0, 9, 2000);
-    animateValue('prodiCounter', 0, 63, 2000);
+    animateValue('fakultasCounter', 0, {{ $facultyCount }}, 2000);
+    animateValue('prodiCounter', 0, {{ $programtCount }}, 2000);
   });
 
   document.querySelector('form').addEventListener('submit', function(event) {
@@ -650,7 +655,5 @@ $(document).ready(function() {
   });
 </script>
 @endif
-
-
-
+@endpush
 @endsection
