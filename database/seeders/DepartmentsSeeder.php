@@ -13,7 +13,7 @@ class DepartmentsSeeder extends Seeder
      */
     public function run(): void
     {
-        Department::insert([
+        Department::create([
             'name' => 'UINSU',
             'type' => 'faculty',
             'parent_id' => null,
@@ -25,19 +25,19 @@ class DepartmentsSeeder extends Seeder
 
         foreach ($departments as $faculty => $programs) {
             // Insert faculty
-            $facultyId = Department::insertGetId([
-                'name' => $faculty,
-                'type' => 'faculty',
-                'parent_id' => null,
+            $faculty = Department::create([
+            'name' => $faculty,
+            'type' => 'faculty',
+            'parent_id' => null,
             ]);
 
             // Insert programs
             foreach ($programs as $program) {
-                Department::insert([
-                    'name' => $program,
-                    'type' => 'program',
-                    'parent_id' => $facultyId,
-                ]);
+            Department::create([
+                'name' => $program,
+                'type' => 'program',
+                'parent_id' => $faculty->id,
+            ]);
             }
         }
     }

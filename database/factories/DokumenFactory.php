@@ -23,7 +23,12 @@ class DokumenFactory extends Factory
             'sub_kriteria' => $this->faker->realText(30),
             'catatan' => $this->faker->realText(100),
             'tipe' => $this->faker->randomElement(['PDF', 'URL', 'Image']),
-            'path' => $this->faker->imageUrl()
+            'path' => $this->faker->imageUrl(),
+            'views' => $this->faker->numberBetween(0, 10000),
+            'revisions' => $this->faker->numberBetween(0, 10),
+            'created_at' => $this->faker->dateTimeBetween('-2 year', 'now'),
         ];
     }
+
+    
 }

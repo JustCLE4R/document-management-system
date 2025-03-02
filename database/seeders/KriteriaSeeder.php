@@ -12,21 +12,24 @@ class KriteriaSeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [
-            ['id' => 1, 'name' => 'Kriteria 1', 'description' => 'Visi, Misi, Tujuan dan Startegi'],
-            ['id' => 2, 'name' => 'Kriteria 2', 'description' => 'Tata Pamong, Tata Kelola, dan Kerja Sama'],
-            ['id' => 3, 'name' => 'Kriteria 3', 'description' => 'Mahasisawa'],
-            ['id' => 4, 'name' => 'Kriteria 4', 'description' => 'Sumber Daya Manusia'],
-            ['id' => 5, 'name' => 'Kriteria 5', 'description' => 'Keuangan, Sarana dan Prasarana'],
-            ['id' => 6, 'name' => 'Kriteria 6', 'description' => 'Pendidikan'],
-            ['id' => 7, 'name' => 'Kriteria 7', 'description' => 'Penelitian'],
-            ['id' => 8, 'name' => 'Kriteria 8', 'description' => 'Pengabian Kepada Masyarakat'],
-            ['id' => 9, 'name' => 'Kriteria 9', 'description' => 'Luaran dan Capaian Tridharma'],
-            // ['id' => 10, 'name' => 'Kondisi Eksternal'],
-            // ['id' => 11, 'name' => 'Profil Institusi'],
-            // ['id' => 12, 'name' => 'Analisis & Penetapan Program Pengembangan'],
-        ];
+        $this->insertKriteria(1, 1, 'Kriteria 1', 'Visi, Misi, Tujuan dan Startegi');
+        $this->insertKriteria(2, 1, 'Kriteria 2', 'Tata Pamong, Tata Kelola, dan Kerja Sama');
+        $this->insertKriteria(3, 1, 'Kriteria 3', 'Mahasisawa');
+        $this->insertKriteria(4, 1, 'Kriteria 4', 'Sumber Daya Manusia');
+        $this->insertKriteria(5, 1, 'Kriteria 5', 'Keuangan, Sarana dan Prasarana');
+        $this->insertKriteria(6, 1, 'Kriteria 6', 'Pendidikan');
+        $this->insertKriteria(7, 1, 'Kriteria 7', 'Penelitian');
+        $this->insertKriteria(8, 1, 'Kriteria 8', 'Pengabian Kepada Masyarakat');
+        $this->insertKriteria(9, 1, 'Kriteria 9', 'Luaran dan Capaian Tridharma');
+    }
 
-        Kriteria::insert($data);
+    private function insertKriteria($id, $department_id, $name, $description)
+    {
+        Kriteria::create([
+            'id' => $id,
+            'department_id' => $department_id,
+            'name' => $name,
+            'description' => $description,
+        ]);
     }
 }

@@ -23,6 +23,12 @@ return new class extends Migration
             $table->enum('status', ['private', 'share', 'borrow'])->default('private');
             $table->unsignedBigInteger('borrow_from')->nullable();
             $table->foreign('borrow_from')->references('id')->on('dokumens')->nullOnDelete();
+
+            // for statistic
+            $table->unsignedInteger('views')->default(0);
+            $table->unsignedInteger('revisions')->default(0);
+
+            // timestamps
             $table->timestamps();
         });
     }

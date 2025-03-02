@@ -25,7 +25,7 @@ class DokumenController extends Controller
 
         $dokumens = (new PublicDokumenController)->search($term, $kriteria, $tipe, 10);
         $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
-                        ->orWhereNull('department_id')
+                        ->orWhere('department_id', 1)
                         ->get();
 
         return view('admin.dokumen.index', [
@@ -42,7 +42,7 @@ class DokumenController extends Controller
     {
         $shareables = Dokumen::where('status', 'share')->get();
         $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
-                        ->orWhereNull('department_id')
+                        ->orWhere('department_id', 1)
                         ->get();
 
         return view('admin.dokumen.create', [
@@ -102,8 +102,8 @@ class DokumenController extends Controller
 
         $shareables = Dokumen::where('status', 'share')->get();
         $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
-        ->orWhereNull('department_id')
-        ->get();
+                        ->orWhere('department_id', 1)
+                        ->get();
 
         return view('admin.dokumen.edit', [
             'title' => 'Admin Edit Dokumen',

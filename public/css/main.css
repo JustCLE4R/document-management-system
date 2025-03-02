@@ -7,7 +7,7 @@ html {
 }
 
 #form input, #form select, #form textarea{
-  border-color:orange;
+  border-color:#1cad1cd6;
 }
 
 .form-control:focus {
@@ -19,14 +19,14 @@ html {
   background-color: #fff;
   color: #000;  
   outline: none; 
-  border-color: orange ;
+  border-color: #677893 ;
 }
 .btn-search{
-  background-color: #f57d00;
+  background-color: #677893;
   color: #fff;
 }
 .form-select {
-  border-color:#f57d00;
+  border-color:#1cad1cd6;
 }
 /* CSS untuk menambahkan border radius kiri pada select kriteria */
 select[name="kriteria"] {
@@ -39,11 +39,10 @@ select[name="kriteria"] {
   padding:1rem;
   color: #000;
 }
-
-.bg-success.text-light {
-  background-color: #f57d00 !important; 
-  color: #fff !important;
-}
+/* 
+select{
+  border: none !important;
+} */
 
 .border-success {
   border-color: #28a745 !important; 
@@ -62,7 +61,7 @@ select[name="kriteria"] {
   width: 14.63%;
   height: 19.83%;
   border-radius: 100%;
-  background: #ffad4e;
+  background: #677893;
   transform: rotateZ(212deg) scale(1.5);
   transform-origin: 100% 100%;
   animation: floatUpDown 3s ease-in-out infinite, rotateForever 3s linear infinite;
@@ -87,7 +86,7 @@ select[name="kriteria"] {
   top: -17.9%;
   width: 6.63%;
   height: 8.83%;
-  background: #ffc40e;
+  background: #677893;
   transform: rotateZ(45deg) scale(1.5);
   transform-origin: 100% 100%;
   animation: floatUpDown 3s ease-in-out infinite, rotateForever 3s linear infinite;
@@ -111,7 +110,7 @@ select[name="kriteria"] {
   top: 85.6%;
   width: 19.51%;
   height: 26.01%;
-  background: #ff7a00;
+  background: #677893;
   z-index:2;
   transform: rotateZ(-22deg);
   transform-origin: 100% 100%;
@@ -447,7 +446,7 @@ a.back-to-top i {
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: #ef6a00;
+  background: #098107;
   border-radius: 30px;
   text-align: center;
   transition: all 0.2s ease-in-out;
@@ -479,7 +478,7 @@ a.back-to-top:hover, a.back-to-top:focus {
   aspect-ratio: 1;
   display: grid;
   grid: 50%/50%;
-  color:#f09121;
+  color:#16a744;
   --_g: no-repeat linear-gradient(currentColor 0 0);
   background: var(--_g), var(--_g), var(--_g);
   background-size: 50.1% 50.1%;
@@ -490,7 +489,7 @@ a.back-to-top:hover, a.back-to-top:focus {
 
 .text-loader{
   top:55%;
-  color:#f09121;
+  color:#045d0494;
   font-size: 14px;
   position: absolute;
 }
@@ -610,7 +609,7 @@ hr {
 #features .box-item:hover,
 .box-item:hover {
   box-shadow: 0 10px 22px 10px rgba(27, 38, 49, 0.1);
-  background-color: #ef6a00; /* Warna latar belakang saat hover */
+  background-color: #0f9300; /* Warna latar belakang saat hover */
 }
 
 #features .box-item:hover .icon i,
@@ -660,7 +659,7 @@ hr {
 
 .services-item .icon i {
   font-size: 30px;
-  color: #ef6a00;
+  color: #0f9300;
   line-height: 70px;
   transition: all 0.3s ease-in-out 0s;
   -moz-transition: all 0.3s ease-in-out 0s;
@@ -668,7 +667,7 @@ hr {
   -o-transition: all 0.3s ease-in-out 0s;
 }
 .services-item .icon i:hover {
-  color: #ef6a00 !important;
+  color: #0f9300 !important;
 }
 .services-item .services-content h3 {
   margin-top: 10px;
@@ -812,12 +811,12 @@ nav .navbar .links li .link::after {
 }
 
 nav .navbar .links li .link:hover {
-  color: #ffad4e;
+  color: green;
 }
 
-/* nav .navbar .links li .link:hover::after {
-  background-color: orange;
-} */
+nav .navbar .links li .link:hover::after {
+  background-color: green;
+}
 
 .links li:hover .htmlcss-arrow,
 .links li:hover .js-arrow {
@@ -1073,7 +1072,7 @@ nav .navbar .links li:hover .js-sub-menu {
 }
 
 #hero-area .contents .head-title {
-  color: #ef6a00;
+  color: #222222;
   font-size: 42px;
   font-weight: 700;
   line-height: 60px;
@@ -1735,28 +1734,17 @@ textarea {
 
 .page-item.active .page-link {
   color: #fff;
-  background-color: #ef6a00;
-  border-color: #ef6a00;
+  background-color: green;
+  border-color: green;
 }
 .page-link {
-  color:#ef6a00;
+  color:#0f9300;
 }
-.page-link:hover{
-  color:#ef6a00;
-}
+
 button:hover{
   cursor: pointer;
 }
-.btn-success {
-  background-color:#ef6a00 !important;
-  border-color:white !important;
-}
-.text-success {
-  color:#ef6a00 !important;
-}
-.text-success:hover {
-  color:#ef6a00 !important;
-}
+
 
 
 .service-section {
@@ -1767,26 +1755,26 @@ button:hover{
   text-align: center;
   padding: 50px 30px;
   border-radius: 10px;
-  background: #fff;
+  background: #077d0b;
   margin-bottom: 30px;
 }
 
 .service-section .single-service:hover .icon {
-  color: #fff;
+  color: #03831e;
 }
 .scroll-top {
   background: #077d0b !important;
 }
 .service-section .single-service:hover .icon.color-1 {
-  background: #ef6a00;
+  background: #03831e;
 }
 
 .service-section .single-service:hover .icon.color-2 {
-  background:#ef6a00;
+  background:#03831e;
 }
 
 .service-section .single-service:hover .icon.color-3 {
-  background: #ef6a00;
+  background: #03831e;
 }
 
 
@@ -1806,15 +1794,15 @@ button:hover{
 }
 
 .service-section .single-service .icon.color-1 {
-  background: #ff9d56;
+  background: #a6f1b6;
 }
 
 .service-section .single-service .icon.color-2 {
-  background: #ff9d56;
+  background: #a6f1b6;
 }
 
 .service-section .single-service .icon.color-3 {
-  background: #ff9d56;
+  background: #a6f1b6;
 }
 
 

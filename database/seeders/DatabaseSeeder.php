@@ -27,7 +27,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call(KriteriaSeeder::class);
 
-        Dokumen::factory(1415)->create();
+        Dokumen::factory(1415)->sequence(
+            ['revisions' => 10], 
+            ['revisions' => 10], 
+            ['revisions' => 10], 
+            ...array_fill(0, 1412, ['revisions' => fake()->biasedNumberBetween(0, 10, 'sqrt')])
+        )->create();
     }
 
     /**

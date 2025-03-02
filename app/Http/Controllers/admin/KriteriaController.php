@@ -22,8 +22,10 @@ class KriteriaController extends Controller
 
         $kriterias = Kriteria::where(function ($query) {
             $query->where('department_id', Auth::user()->department_id)
-            ->orWhereNull('department_id');
+            ->orWhere('department_id', 1);
         });
+
+        dd($kriterias);
 
         if ($search) {
             $kriterias = $kriterias->where(function ($query) use ($search) {
