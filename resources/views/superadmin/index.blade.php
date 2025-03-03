@@ -92,7 +92,7 @@
             <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/statistik'">
                 <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="1.5s">
                     <div class="icon">
-                        <i class="bi bi-card-checklist"></i>
+                        <i class="bi bi-bar-chart"></i>
                     </div>
                     <div class="services-content">
                         <span class="h4 text-success">Statistik</span>

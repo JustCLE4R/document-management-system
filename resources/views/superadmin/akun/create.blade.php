@@ -29,7 +29,7 @@
             <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required>
               <option value="" selected>Pilih Departemen</option>
               @foreach ($departments as $department)
-              <option value="{{ $department->id }}" {{ request()->input('department') == $department->id ? 'selected' : '' }}>
+              <option value="{{ $department->id }}" {{ old('department') == $department->id ? 'selected' : '' }}>
                 {{ $department->type == 'faculty' ? '===' . $department->name . '===' : $department->name }}
               </option>
               @endforeach

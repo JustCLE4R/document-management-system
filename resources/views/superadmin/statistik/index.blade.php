@@ -16,39 +16,71 @@
   }
 </style>
 @endpush
-<div class="container mt-5">
-  <h2 class="mb-4">📊 Statistik Dokumen</h2>
+<div class="container" style="padding-top: 9vh;">
+  <div class="section-header text-center">
+    <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Statistik Sistem</h2>
+    <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
+  </div>
 
-  <div class="text-dark fw-bold text-center mb-2">Dokumen yang Baru Ditambahkan</div>
+  <div class="text-dark fw-bold text-center mb-1">Dokumen yang Baru Ditambahkan</div>
   <div class="running-text-container overflow-hidden bg-light p-3 rounded mb-4">
     <br>
     <div id="runningText" class="text-primary fw-bold text-center"></div>
   </div>
   
 
-  <div class="row mb-4">
-    <div class="col-md-4">
-      <div class="card text-white bg-primary mb-3 h-100">
+  <div class="row mb-5 g-3 g-md-4">
+    <div class="col-md-3">
+      <div class="card text-dark border-primary mb-3 h-100">
         <div class="card-body">
           <h5 class="card-title">📁 Total Dokumen</h5>
+          <hr>
           <p class="card-text display-4">{{ $totalDocuments }}</p>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="card text-white bg-success mb-3 h-100">
+    <div class="col-md-3">
+      <div class="card text-dark border-info mb-3 h-100">
         <div class="card-body">
-          <h5 class="card-title">🆕 Dokumen Baru</h5>
-          <p>Hari Ini: <span class="badge bg-light text-dark">{{ $newDocumentsToday }}</span></p>
-          <p>Minggu Ini: <span class="badge bg-light text-dark">{{ $newDocumentsWeek }}</span></p>
-          <p>Bulan Ini: <span class="badge bg-light text-dark">{{ $newDocumentsMonth }}</span></p>
+          <h5 class="card-title">🏷️ Total Kriteria</h5>
+          <hr>
+          <p class="card-text display-4">{{ $totalKriteria }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-dark border-warning mb-3 h-100">
+        <div class="card-body">
+          <h5 class="card-title">🏢 Total Departemen</h5>
+          <hr>
+          <p class="card-text display-4">{{ $totalDepartment }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-light text-dark border-success shadow-sm mb-3 h-100">
+        <div class="card-body">
+          <h5 class="card-title text-success">🆕 Dokumen Baru</h5>
+          <hr>
+          <div class="d-flex justify-content-between align-items-center">
+            <span>⏰ Hari Ini</span>
+            <span class="badge bg-success text-white p-2 px-3">{{ $newDocumentsToday }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span>📅 Minggu Ini</span>
+            <span class="badge bg-primary text-white p-2 px-3">{{ $newDocumentsWeek }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <span>📆 Bulan Ini</span>
+            <span class="badge bg-warning text-dark p-2 px-3">{{ $newDocumentsMonth }}</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <h4 class="mb-3">📈 Dokumen yang Sering Diakses</h4>
-  <ul class="list-group mb-4">
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">🔥 Dokumen yang Sering Diakses</h4>
+  <ul class="list-group mb-5">
     @foreach($mostViewedDocuments as $doc)
       <li class="list-group-item d-flex justify-content-between align-items-center">
         {{ $doc->name }}
@@ -57,18 +89,18 @@
     @endforeach
   </ul>
 
-  <h4 class="mb-3">🏢 Dokumen Terbanyak per Departemen</h4>
-  <ul class="list-group mb-4">
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">🏢 Dokumen Terbanyak per Departemen</h4>
+  <ul class="list-group mb-5">
     @foreach($documentByDepartment as $department)
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ ucfirst($department->kriteria->department->name) }}
+        {{ $department->department_name }}
         <span class="badge bg-secondary">📂 {{ $department->total }} doc(s)</span>
       </li>
     @endforeach
   </ul>
 
-  <h4 class="mb-3">📚 Dokumen Terbanyak per Kategori</h4>
-  <ul class="list-group mb-4">
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">📚 Dokumen Terbanyak per Kriteria</h4>
+  <ul class="list-group mb-5">
     @foreach($documentsByKriteria as $kriteria)
       <li class="list-group-item d-flex justify-content-between align-items-center">
         {{ ucfirst($kriteria->kriteria->name) }}: {{ $kriteria->kriteria->department->name }}
@@ -77,8 +109,8 @@
     @endforeach
   </ul>
 
-  <h4 class="mb-3">🔄 Dokumen dengan Revisi Terbanyak</h4>
-  <ul class="list-group mb-4">
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">🔄 Dokumen dengan Revisi Terbanyak</h4>
+  <ul class="list-group mb-5">
     @foreach($mostRevisedDocuments as $doc)
       <li class="list-group-item d-flex justify-content-between align-items-center">
         {{ $doc->name }}
@@ -87,7 +119,7 @@
     @endforeach
   </ul>
 
-  <h4 class="mb-3">📊 Diagram Statistik</h4>
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">📊 Diagram Statistik</h4>
   <div class="row mb-5">
     <div class="col-md-6 mb-4 mx-auto">
       <h5 class="text-center">📅 Dokumen per Tahun</h5>

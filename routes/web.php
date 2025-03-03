@@ -22,11 +22,13 @@ Route::middleware(['auth', 'security-header'])->group(function () {
     Route::get('/logout', [LoginController::class, 'deauthenticate']);
     Route::get('/', [LandingController::class, 'index'])->name('dashboard')->middleware('no-cache');
     Route::get('/daftar-dokumen', [DokumenController::class, 'getDokumen']);
+    Route::get('/dokumen/{dokumen}', [DokumenController::class, 'show'])->name('dokumen.show');
+    // Route::get('/dokumen/{dokumen}/download', [DokumenController::class, 'download']);
 });
 
 Route::prefix('admin')->middleware(['auth', 'is-admin', 'security-header'])->group(function () {
     Route::view('/', 'admin.index');
-    Route::resource('/dokumen', AdminDokumenController::class)->parameters(['dokumen' => 'dokumen']);
+    Route::resource('/dokumen', AdminDokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('admin.dokumen');
     Route::resource('/kriteria', AdminKriteriaController::class)->parameters(['kriteria' => 'kriteria'])->names('admin.kriteria');
     Route::resource('/user', AdminUserController::class)->only(['edit', 'update', 'show']);
 });
@@ -34,8 +36,8 @@ Route::prefix('admin')->middleware(['auth', 'is-admin', 'security-header'])->gro
 Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-header'])->group(function () {
     Route::view('/', 'superadmin.index');
     Route::get('/statistik', [SuperadminStatistikController::class, 'index'])->name('superadmin.statistik');
-    Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen']);
-    Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show']);
+    Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('superadmin.dokumen');
+    Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
     Route::resource('/kriteria', SuperAdminKriteriaController::class)->parameters(['kriteria' => 'kriteria'])->names('superadmin.kriteria');
-    Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show']);
+    Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
 });

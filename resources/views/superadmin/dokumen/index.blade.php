@@ -95,13 +95,13 @@
         @foreach ($dokumens as $dokumen)
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
-            <td><a class="text-success" href="{{ route('dokumen.show', $dokumen->id) }}">{{ $dokumen->name }}</a></td>
+            <td><a class="text-success" href="{{ route('superadmin.dokumen.show', $dokumen->id) }}">{{ $dokumen->name }}</a></td>
             <td class="text-center">{{ $dokumen->kriteria->name }}</td>
             <td>{{ $dokumen->sub_kriteria }}</td>
             <td>{{ $dokumen->user->department->name }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>
             <td class="text-center">
-              <a class="text-primary" href="{{ route('dokumen.edit', $dokumen->id) }}"><i class="bi bi-pencil-square"></i></a>
+              <a class="text-primary" href="{{ route('superadmin.dokumen.edit', $dokumen->id) }}"><i class="bi bi-pencil-square"></i></a>
 
               <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $dokumen->id }}"><i class="bi bi-trash"></i></button>
 
@@ -119,7 +119,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                      <form class="d-inline" action="{{ route('dokumen.destroy', $dokumen->id) }}" method="post">
+                      <form class="d-inline" action="{{ route('superadmin.dokumen.destroy', $dokumen->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>

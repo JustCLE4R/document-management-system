@@ -25,8 +25,6 @@ class KriteriaController extends Controller
             ->orWhere('department_id', 1);
         });
 
-        dd($kriterias);
-
         if ($search) {
             $kriterias = $kriterias->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%")

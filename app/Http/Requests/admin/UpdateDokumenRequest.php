@@ -24,7 +24,7 @@ class UpdateDokumenRequest extends FormRequest
                         ->where(function ($query) {
                             $query->whereHas('department', function ($query) {
                                 $query->where('id', Auth::user()->department_id);
-                            })->orWhereNull('department_id');
+                            })->orWhere('department_id', 1);
                         })
                         ->first();
 

@@ -97,6 +97,8 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen)
     {
+        $dokumen->increment('revisions');
+
         if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 

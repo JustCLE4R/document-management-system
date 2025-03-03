@@ -42,9 +42,9 @@
     <div class="row mb-5">
       <!-- Services item -->
       @foreach ($dokumens as $dokumen)
-      <div class="col-md-6 col-lg-6 col-xs-12 my-3">
-        <a href="{{ $dokumen->tipe == 'URL' ? $dokumen->path : url('storage/'.$dokumen->path) }}" class="box-link"
-          target="_blank">
+      <div class="col-md-6 col-lg-6 col-xs-12 my-3" style="cursor: pointer" onclick="window.open('{{ route('dokumen.show', $dokumen->id) }}', '_blank');">
+        {{-- <a href="{{ $dokumen->tipe == 'URL' ? $dokumen->path : url('storage/'.$dokumen->path) }}" class="box-link"
+          target="_blank"> --}}
           <div class="box-item border wow fadeInRight m-0" data-wow-delay="0.3s">
             <span class="icon">
               @switch($dokumen->tipe)
@@ -74,7 +74,7 @@
               <span class="d-flex justify-content-end"><p>{{ \Carbon\Carbon::parse($dokumen->updated_at)->translatedFormat('d F Y') }}</p></span>
             </div>
           </div>
-        </a>
+        {{-- </a> --}}
       </div>
       @endforeach
       <!-- End Services item -->

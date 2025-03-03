@@ -29,7 +29,7 @@ class LandingController extends Controller
             $kriteriaCount = $kriteriaCount->count();
             $dokumenCount = $dokumenCount->count();
         } else {
-            $kriteriaCount = $kriteriaCount->where('department_id', Auth::user()->department->id)->count();
+            $kriteriaCount = $kriteriaCount->where('department_id', Auth::user()->department->id)->orWhere('department_id', 1)->count();
             $dokumenCount = $dokumenCount->whereHas('user.department', function ($query) {
                 $query->where('id', Auth::user()->department->id);
             })->count();

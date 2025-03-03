@@ -80,4 +80,26 @@ class DokumenController extends Controller
 
         return $results;
     }
+
+    public function show(Dokumen $dokumen)
+    {
+        $dokumen->increment('views');
+
+        if ($dokumen->tipe === 'URL') {
+            return redirect()->away($dokumen->path); // Redirect to external link
+        }
+
+        if ($dokumen->tipe === 'PDF' || $dokumen->tipe === 'Image') {
+            return redirect(asset('storage/' . $dokumen->path)); // Open file directly
+        }
+
+        return response()->download(storage_path('app/public/' . $dokumen->path)); // Force download for other files
+    }
+
+    // public function download(Dokumen $dokumen)
+    // {
+    //     $dokumen->increment('downloads');
+
+    //     return response()->download(storage_path('app/public/' . $dokumen->path));
+    // }
 }

@@ -29,7 +29,9 @@ class Dokumen extends Model
         } elseif ($period == 'week') {
             return $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->count();
         } elseif ($period == 'month') {
-            return $query->whereMonth('created_at', Carbon::now()->month)->count();
+            return $query->whereYear('created_at', Carbon::now()->year)
+                        ->whereMonth('created_at', Carbon::now()->month)
+                        ->count();
         }
         return 0;
     }
@@ -38,7 +40,7 @@ class Dokumen extends Model
     {
         return self::selectRaw('YEAR(created_at) as year, count(*) as total')
             ->groupBy('year')
-            ->orderBy('year', 'desc')
+            ->orderBy('year', 'asc')
             ->get();
     }
 
@@ -46,8 +48,8 @@ class Dokumen extends Model
     {
         return self::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, count(*) as total')
             ->groupBy('year', 'month')
-            ->orderBy('year', 'desc')
-            ->orderBy('month', 'desc')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
             ->get();
     }
 
@@ -55,7 +57,7 @@ class Dokumen extends Model
     {
         return self::selectRaw('DATE(created_at) as day, count(*) as total')
             ->groupBy('day')
-            ->orderBy('day', 'desc')
+            ->orderBy('day', 'asc')
             ->get();
     }
 
@@ -86,9 +88,10 @@ class Dokumen extends Model
 
     public static function documentByDepartment($limit = 5)
     {
-        return self::selectRaw('kriteria_id, count(*) as total')
-            ->with(['kriteria:id,name,department_id', 'kriteria.department:id,name'])
-            ->groupBy('kriteria_id')
+        return self::selectRaw('departments.name as department_name, count(*) as total')
+            ->join('users', 'dokumens.user_id', '=', 'users.id')
+            ->join('departments', 'users.department_id', '=', 'departments.id')
+            ->groupBy('departments.name')
             ->orderByDesc('total')
             ->take($limit)
             ->get();

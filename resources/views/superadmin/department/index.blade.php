@@ -37,7 +37,7 @@
     <div class="row justify-content-between pb-4">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-2 mb-md-0">
         <a href="/superadmin"  class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-chevron-double-left"></i> Kembali</a>
-        <a href="/superadmin/department/create" class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-plus-lg"></i> Tambah</a>
+        <a href="{{ route('superadmin.department.create') }}" class="btn btn-success wow fadeInRight" ata-wow-delay="0.3s"><i class="bi bi-plus-lg"></i> Tambah</a>
       </div>
       <div class="col-lg-5 col-md-8 col-sm-12">
         <form class="wow fadeInRight" data-wow-delay="0.3s" action="/superadmin/department" method="get">
@@ -80,7 +80,7 @@
             <td class="text-center">{{ $department->type }}</td>
             <td>{{ $department->parent ? $department->parent->name : '-' }}</td>
             <td class="text-center">
-              <a class="text-primary" href="{{ route('department.edit', $department->id) }}"><i class="bi bi-pencil-square"></i></a>
+              <a class="text-primary" href="{{ route('superadmin.department.edit', $department->id) }}"><i class="bi bi-pencil-square"></i></a>
               <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $department->id }}"><i class="bi bi-trash"></i></button>
               <div class="modal fade" id="deleteModal-{{ $department->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $department->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered  " role="document">

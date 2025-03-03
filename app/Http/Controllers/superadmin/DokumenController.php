@@ -106,6 +106,8 @@ class DokumenController extends Controller
      */
     public function update(UpdateDokumenRequest $request, Dokumen $dokumen)
     {
+        $dokumen->increment('revisions');
+
         $prepareData = $request->only(['name', 'kriteria', 'sub_kriteria', 'catatan']);
 
         if ($request->hasFile('file')) {

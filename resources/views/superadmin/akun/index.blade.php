@@ -82,31 +82,32 @@
             <td class="text-center">{{ $user->role }}</td>
             <td class="text-center">
               <a class="text-primary" href="/superadmin/user/{{ $user->id }}/edit"><i class="bi bi-pencil-square"></i></a>
-              <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $user->id }}"><i class="bi bi-trash"></i></button>
-              <div class="modal fade" id="deleteModal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $user->id }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered  " role="document">
+                @if (auth()->user()->id !== $user->id)
+                <button type="button" class="text-danger" style="background:none; border:none; padding:0;" data-toggle="modal" data-target="#deleteModal-{{ $user->id }}"><i class="bi bi-trash"></i></button>
+                <div class="modal fade" id="deleteModal-{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ $user->id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title text-dark" id="deleteModalLabel-{{ $user->id }}">Konfirmasi Hapus Akun</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body d-flex justify-content-start text-dark">
-                      Apakah anda yakin ingin menghapus Akun&nbsp;<b>{{ $user->name }}</b>&nbsp;ini?
-                    </div>
-                    <div class="modal-footer">
-                      <form class="d-inline" action="/superadmin/user/{{ $user->id }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
-                      </form>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    </div>
+                  <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="deleteModalLabel-{{ $user->id }}">Konfirmasi Hapus Akun</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body d-flex justify-content-start text-dark">
+                    Apakah anda yakin ingin menghapus Akun&nbsp;<b>{{ $user->name }}</b>&nbsp;ini?
+                  </div>
+                  <div class="modal-footer">
+                    <form class="d-inline" action="/superadmin/user/{{ $user->id }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                  </div>
                   </div>
                 </div>
-              </div>
-
+                </div>
+                @endif
             </td>
           </tr>
         @endforeach
