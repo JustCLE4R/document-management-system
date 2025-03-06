@@ -73,14 +73,14 @@ class Dokumen extends Model
 
     public static function mostRecentDocuments($limit = 5)
     {
-        return self::with(['user.department', 'kriteria.department'])->orderByDesc('created_at')->take($limit)->get();
+        return self::with(['user.department', 'kategori.department'])->orderByDesc('created_at')->take($limit)->get();
     }
 
-    public static function documentsByKriteria($limit = 5)
+    public static function documentsByKategori($limit = 5)
     {
-        return self::selectRaw('kriteria_id, count(*) as total')
-            ->with(['kriteria:id,name,department_id', 'kriteria.department:id,name'])
-            ->groupBy('kriteria_id')
+        return self::selectRaw('kategori_id, count(*) as total')
+            ->with(['kategori:id,name,department_id', 'kategori.department:id,name'])
+            ->groupBy('kategori_id')
             ->orderByDesc('total')
             ->take($limit)
             ->get();
@@ -102,8 +102,8 @@ class Dokumen extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function kriteria()
+    public function kategori()
     {
-        return $this->belongsTo(Kriteria::class);
+        return $this->belongsTo(Kategori::class);
     }
 }

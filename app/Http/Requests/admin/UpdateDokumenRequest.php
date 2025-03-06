@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Requests\admin;
 
-use App\Models\Kriteria;
+use App\Models\Kategori;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,11 +16,11 @@ class UpdateDokumenRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'kriteria_id' => [
+            'kategori_id' => [
                 'required',
-                'exists:kriterias,id',
+                'exists:kategoris,id',
                 function ($attribute, $value, $fail) {
-                    $kriteria = Kriteria::where('id', $value)
+                    $kategori = Kategori::where('id', $value)
                         ->where(function ($query) {
                             $query->whereHas('department', function ($query) {
                                 $query->where('id', Auth::user()->department_id);
@@ -28,13 +28,13 @@ class UpdateDokumenRequest extends FormRequest
                         })
                         ->first();
 
-                    if (!$kriteria) {
+                    if (!$kategori) {
                         $fail('The selected ' . $attribute . ' is invalid.');
                     }
                 },
 
             ],
-            'sub_kriteria' => 'max:255',
+            'sub_kategori' => 'max:255',
             'catatan' => 'max:255',
             'file' => 'nullable|mimes:pdf,png,jpg,jpeg|max:102400|prohibits:url',
             'url' => 'nullable|url|max:255|prohibits:file',
@@ -59,8 +59,8 @@ class UpdateDokumenRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'kriteria_id' => 'Kriteria',
-            'sub_kriteria' => 'Sub Kriteria',
+            'kategori_id' => 'Kategori',
+            'sub_kategori' => 'Sub Kategori',
             'catatan' => 'Catatan',
             'file' => 'File',
             'url' => 'URL',

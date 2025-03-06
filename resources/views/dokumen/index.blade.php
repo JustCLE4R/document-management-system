@@ -11,10 +11,10 @@
     </div>
     <form class="row justify-content-center wow fadeInRight mx-2" data-wow-delay="0.3s" action="/daftar-dokumen" method="get">
       <div class="input-group mb-3">
-        <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 90px;">
-          <option value="" selected>Kriteria</option>
-          @foreach ($kriterias as $kriteria)
-            <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+        <select class="form-select p-1 bg-success text-light shadow" name="kategori" id="" style="width: 90px;">
+          <option value="" selected>Kategori</option>
+          @foreach ($kategoris as $kategori)
+            <option value="{{ $kategori->id }}" {{ request()->input('kategori') == $kategori->id ? 'selected' : '' }}>{{ $kategori->name }}</option>
           @endforeach
         </select>
         <select class="form-select p2  bg-success text-light shadow" name="tipe" id="" style="width: 60px;">
@@ -68,7 +68,7 @@
               @endif
               <h4>{{ $dokumen->name }}</h4> 
               <p class="text-secondary pb-3">
-                {{ $dokumen->kriteria->name }}
+                {{ $dokumen->kategori->name }}
               </p>
               <p class="mb-4">{{ $dokumen->catatan }}</p>
               <span class="d-flex justify-content-end"><p>{{ \Carbon\Carbon::parse($dokumen->updated_at)->translatedFormat('d F Y') }}</p></span>

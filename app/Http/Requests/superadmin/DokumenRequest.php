@@ -24,8 +24,8 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'kriteria' => 'required|numeric|between:1,12',
-            'sub_kriteria' => 'max:255',
+            'kategori' => 'required|numeric|between:1,12',
+            'sub_kategori' => 'max:255',
             'Departments' => 'required|exists:departments,id',
             'status' => 'required|in:private,share,borrow',
             'catatan' => 'max:255',
@@ -39,10 +39,10 @@ class DokumenRequest extends FormRequest
         return [
             'name.required' => 'Nama harus diisi.',
             'name.max' => 'Nama tidak boleh melebihi 255 karakter.',
-            'kriteria.required' => 'Kriteria harus diisi.',
-            'kriteria.numeric' => 'Kriteria harus berupa angka.',
-            'kriteria.between' => 'Kriteria harus di antara 1 dan 12.',
-            'sub_kriteria.max' => 'Sub Kriteria tidak boleh melebihi 255 karakter.',
+            'kategori.required' => 'Kategori harus diisi.',
+            'kategori.numeric' => 'Kategori harus berupa angka.',
+            'kategori.between' => 'Kategori harus di antara 1 dan 12.',
+            'sub_kategori.max' => 'Sub Kategori tidak boleh melebihi 255 karakter.',
             'Departments.required' => 'Program Studi harus diisi.',
             'Departments.exists' => 'Program Studi yang dipilih tidak valid.',
             'status.required' => 'Status harus diisi.',
@@ -61,8 +61,8 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'kriteria' => 'Kriteria',
-            'sub_kriteria' => 'Sub Kriteria',
+            'kategori' => 'Kategori',
+            'sub_kategori' => 'Sub Kategori',
             'catatan' => 'Catatan',
             'file' => 'File',
             'url' => 'URL',

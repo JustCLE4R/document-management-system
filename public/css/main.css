@@ -28,8 +28,8 @@ html {
 .form-select {
   border-color:#1cad1cd6;
 }
-/* CSS untuk menambahkan border radius kiri pada select kriteria */
-select[name="kriteria"] {
+/* CSS untuk menambahkan border radius kiri pada select kategori */
+select[name="kategori"] {
   border-radius: 5px 0 0 5px; /* Border radius kiri */
 }
 

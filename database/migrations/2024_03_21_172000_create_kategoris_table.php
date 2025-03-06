@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriterias', function (Blueprint $table) {
+        Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('cascade');
             $table->string('name');
             $table->string('description', 64)->nullable();
             $table->string('icon')->default('file-earmark-text');
-            $table->string('image')->default('kriteria/default-kriteria.svg');
+            $table->string('image')->default('kategori/default-kategori.svg');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Kriterias');
+        Schema::dropIfExists('Kategoris');
     }
 };

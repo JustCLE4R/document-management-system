@@ -22,13 +22,13 @@
       <!-- Services item end -->
       
       <!-- Services item start -->
-      <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/admin/kriteria'">
+      <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/admin/kategori'">
         <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.6s">
           <div class="icon">
             <i class="bi bi-card-checklist"></i>
           </div>
           <div class="services-content">
-            <span class="h4 text-success">Kriteria</span>
+            <span class="h4 text-success">Kategori</span>
           </div>
         </div>
       </div>

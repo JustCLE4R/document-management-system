@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\admin;
 
-use App\Models\Kriteria;
+use App\Models\Kategori;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,11 +25,11 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'kriteria_id' => [
+            'kategori_id' => [
                 'required',
-                'exists:kriterias,id',
+                'exists:kategoris,id',
                 function ($attribute, $value, $fail) {
-                    $kriteria = Kriteria::where('id', $value)
+                    $kategori = Kategori::where('id', $value)
                         ->where(function ($query) {
                             $query->whereHas('department', function ($query) {
                                 $query->where('id', Auth::user()->department_id);
@@ -37,12 +37,12 @@ class DokumenRequest extends FormRequest
                         })
                         ->first();
 
-                    if (!$kriteria) {
+                    if (!$kategori) {
                         $fail('The selected '  . $attribute . ' is invalid.');
                     }
                 },
             ],
-            'sub_kriteria' => 'max:255',
+            'sub_kategori' => 'max:255',
             'catatan' => 'max:255',
             'file' => 'required_without_all:url,shareable|mimes:pdf,png,jpg,jpeg|max:102400',
             'url' => 'required_without_all:file,shareable|url|max:255',
@@ -67,8 +67,8 @@ class DokumenRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'kriteria_id' => 'Kriteria',
-            'sub_kriteria' => 'Sub Kriteria',
+            'kategori_id' => 'Kategori',
+            'sub_kategori' => 'Sub Kategori',
             'catatan' => 'Catatan',
             'file' => 'File',
             'url' => 'URL',

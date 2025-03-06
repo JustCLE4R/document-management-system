@@ -33,7 +33,7 @@
     <div class="col-md-3">
       <div class="card text-dark border-primary mb-3 h-100">
         <div class="card-body">
-          <h5 class="card-title">📁 Total Dokumen</h5>
+          <h5 class="card-title text-primary">📁 Total Dokumen</h5>
           <hr>
           <p class="card-text display-4">{{ $totalDocuments }}</p>
         </div>
@@ -42,16 +42,16 @@
     <div class="col-md-3">
       <div class="card text-dark border-info mb-3 h-100">
         <div class="card-body">
-          <h5 class="card-title">🏷️ Total Kriteria</h5>
+          <h5 class="card-title text-info">🏷️ Total Kategori</h5>
           <hr>
-          <p class="card-text display-4">{{ $totalKriteria }}</p>
+          <p class="card-text display-4">{{ $totalKategori }}</p>
         </div>
       </div>
     </div>
     <div class="col-md-3">
       <div class="card text-dark border-warning mb-3 h-100">
         <div class="card-body">
-          <h5 class="card-title">🏢 Total Departemen</h5>
+          <h5 class="card-title text-warning">🏢 Total Departemen</h5>
           <hr>
           <p class="card-text display-4">{{ $totalDepartment }}</p>
         </div>
@@ -99,12 +99,12 @@
     @endforeach
   </ul>
 
-  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">📚 Dokumen Terbanyak per Kriteria</h4>
+  <h4 class="mb-3 text-dark" style="font-weight: bold; font-size: 1.5rem">📚 Dokumen Terbanyak per Kategori</h4>
   <ul class="list-group mb-5">
-    @foreach($documentsByKriteria as $kriteria)
+    @foreach($documentsByKategori as $kategori)
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        {{ ucfirst($kriteria->kriteria->name) }}: {{ $kriteria->kriteria->department->name }}
-        <span class="badge bg-secondary">📂 {{ $kriteria->total }} doc(s)</span>
+        {{ ucfirst($kategori->kategori->name) }}: {{ $kategori->kategori->department->name }}
+        <span class="badge bg-secondary">📂 {{ $kategori->total }} doc(s)</span>
       </li>
     @endforeach
   </ul>
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const documents = @json($mostRecentDocuments->map(fn($doc) => 
     "<strong>" . $doc->name . "</strong><br>" .
     "📅 " . \Carbon\Carbon::parse($doc->created_at)->format('d M Y H:i') . " WIB | " .
-    "📂 " . $doc->kriteria->name . " | " .
+    "📂 " . $doc->kategori->name . " | " .
     "👤 " . $doc->user->department->name
 )->toArray()); // Convert to array for JSON encoding
 

@@ -34,10 +34,10 @@
           <div class="header-button wow fadeInRight" ata-wow-delay="0.5s">
             <form class="d-inline" action="/daftar-dokumen" method="get">
               <div class="input-group mb-3">
-                <select class="form-select p-1 bg-success text-light shadow" name="kriteria" id="" style="width: 90px;">
-                  <option value="" selected>Kriteria</option>
-                  @foreach ($kriterias as $kriteria)
-                    <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+                <select class="form-select p-1 bg-success text-light shadow" name="kategori" id="" style="width: 90px;">
+                  <option value="" selected>Kategori</option>
+                  @foreach ($kategoris as $kategori)
+                    <option value="{{ $kategori->id }}" {{ request()->input('kategori') == $kategori->id ? 'selected' : '' }}>{{ $kategori->name }}</option>
                   @endforeach
                 </select>
                 <select class="form-select p2 bg-success text-light shadow" name="tipe" id="" style="width: 60px;">
@@ -66,8 +66,8 @@
           <div class="row wow fadeInRight" ata-wow-delay="0.7s">
             <div class="col-lg-3 col-6">
               <div class="stats-item text-center">
-                <span id="kriteriaCounter" class="purecounter">0</span>
-                <p>Kriteria</p>
+                <span id="kategoriCounter" class="purecounter">0</span>
+                <p>Kategori</p>
               </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -113,17 +113,17 @@
     </div>
     <div class="row">
 
-      @foreach ($kriterias as $kriteria)
-        <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kriteria={{ $kriteria->id }}'">
+      @foreach ($kategoris as $kategori)
+        <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kategori={{ $kategori->id }}'">
           <div class="services-item bg-light wow fadeInRight border" data-wow-delay="0.9s" >
-            <div class="bg-img" style="background-image: url('{{ url('storage/'.$kriteria->image) }}');">
+            <div class="bg-img" style="background-image: url('{{ url('storage/'.$kategori->image) }}');">
               <div class="icon bg-light ">
-                <i class="bi bi-{{ $kriteria->icon }}"></i>
+                <i class="bi bi-{{ $kategori->icon }}"></i>
               </div>
             </div>
             <div class="services-content p-3">
-              <h3><a href="/daftar-dokumen?kriteria=1">{{ $kriteria->name }}</a></h3>
-              <p>{{ $kriteria->description }}</p>
+              <h3><a href="/daftar-dokumen?kategori=1">{{ $kategori->name }}</a></h3>
+              <p>{{ $kategori->description }}</p>
             </div>
           </div>
         </div>
@@ -625,7 +625,7 @@ $(document).ready(function() {
       }, stepTime);
     }
   
-    animateValue('kriteriaCounter', 0, {{ $kriteriaCount }}, 2000);
+    animateValue('kategoriCounter', 0, {{ $kategoriCount }}, 2000);
     animateValue('dokumenCounter', 0, {{ $dokumenCount }}, 2000);
     animateValue('fakultasCounter', 0, {{ $facultyCount }}, 2000);
     animateValue('prodiCounter', 0, {{ $programtCount }}, 2000);

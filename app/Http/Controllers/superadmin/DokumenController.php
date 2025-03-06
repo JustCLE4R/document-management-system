@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\superadmin\DokumenRequest;
 use App\Http\Requests\superadmin\UpdateDokumenRequest;
-use App\Models\Kriteria;
+use App\Models\Kategori;
 
 class DokumenController extends Controller
 {
@@ -20,20 +20,20 @@ class DokumenController extends Controller
     public function index(Request $request)
     {
         $term = $request->input('result');
-        $kriteria = $request->input('kriteria');
+        $kategori = $request->input('kategori');
         $tipe = $request->input('tipe');
         $department = $request->input('department');
 
-        $dokumens = $this->search($term, $kriteria, $tipe, $department, 10);
+        $dokumens = $this->search($term, $kategori, $tipe, $department, 10);
 
         $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
-        $kriterias = Kriteria::all();
+        $kategoris = Kategori::all();
 
         return view('superadmin.dokumen.index', [
             'title' => 'Super Admin Daftar Dokumen',
             'dokumens' => $dokumens,
             'departments' => $departments,
-            'kriterias' => $kriterias
+            'kategoris' => $kategoris
         ]);
     }
 
@@ -42,12 +42,12 @@ class DokumenController extends Controller
      */
     public function create()
     {
-        $kriterias = Kriteria::all();
+        $kategoris = Kategori::all();
         $users = User::where('role', '!=', 'user')->get()->unique('department_id');
 
         return view('superadmin.dokumen.create', [
             'title' => 'Super Admin Tambah Dokumen',
-            'kriterias' => $kriterias,
+            'kategoris' => $kategoris,
             'users' => $users
         ]);
     }
@@ -67,7 +67,7 @@ class DokumenController extends Controller
             $prepareData['path'] = $prepareData['url'];
         }
 
-        $prepareData['kriteria_id'] = $prepareData['kriteria'];
+        $prepareData['kategori_id'] = $prepareData['kategori'];
 
         Dokumen::create($prepareData);
 
@@ -91,13 +91,13 @@ class DokumenController extends Controller
     public function edit(Dokumen $dokumen)
     {
         $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
-        $kriterias = Kriteria::all();
+        $kategoris = Kategori::all();
 
         return view('superadmin.dokumen.edit', [
             'departments' => $departments,
             'title' => 'Super Admin Edit Dokumen',
             'dokumen' => $dokumen,
-            'kriterias' => $kriterias
+            'kategoris' => $kategoris
         ]);
     }
 
@@ -108,7 +108,7 @@ class DokumenController extends Controller
     {
         $dokumen->increment('revisions');
 
-        $prepareData = $request->only(['name', 'kriteria', 'sub_kriteria', 'catatan']);
+        $prepareData = $request->only(['name', 'kategori', 'sub_kategori', 'catatan']);
 
         if ($request->hasFile('file')) {
             if ($dokumen->tipe != 'URL') {
@@ -145,20 +145,20 @@ class DokumenController extends Controller
     /**
      * Search dokumen.
      */
-    private function search(string $term = null, string $kriteria = null, string $tipe = null, int $department = null, int $paginate = 6) : object
+    private function search(string $term = null, string $kategori = null, string $tipe = null, int $department = null, int $paginate = 6) : object
     {
         $query = Dokumen::query();
 
         if ($term) {
             $query->where(function ($query) use ($term) {
             $query->where('name', 'like', '%' . $term . '%')
-                ->orWhere('sub_kriteria', 'like', '%' . $term . '%')
+                ->orWhere('sub_kategori', 'like', '%' . $term . '%')
                 ->orWhere('catatan', 'like', '%' . $term . '%');
             });
         }
 
-        if ($kriteria) 
-            $query->where('kriteria_id', $kriteria);
+        if ($kategori) 
+            $query->where('kategori_id', $kategori);
 
         if ($tipe) 
             $query->where('tipe', $tipe);

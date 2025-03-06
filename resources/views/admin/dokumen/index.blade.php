@@ -42,10 +42,10 @@
       <div class="col-lg-4 col-md-8 col-sm-12">
         <form class="wow fadeInRight" ata-wow-delay="0.3s" action="/admin/dokumen" method="get">
           <div class="input-group">
-            <select class="form-select p-1 bg-success text-light" name="kriteria" id="" style="max-width: 90px;">
-              <option value="" selected>Kriteria</option>
-              @foreach ($kriterias as $kriteria)
-                <option value="{{ $kriteria->id }}" {{ request()->input('kriteria') == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+            <select class="form-select p-1 bg-success text-light" name="kategori" id="" style="max-width: 90px;">
+              <option value="" selected>Kategori</option>
+              @foreach ($kategoris as $kategori)
+                <option value="{{ $kategori->id }}" {{ request()->input('kategori') == $kategori->id ? 'selected' : '' }}>{{ $kategori->name }}</option>
               @endforeach
             </select>
             <select class="form-select p-1 bg-success text-light" name="tipe" id="" style="max-width: 80px;">
@@ -68,8 +68,8 @@
         <tr>
           <th class="text-center">No</th>
           <th>Nama</th>
-          <th class="text-center">Kriteria</th>
-          <th>Sub Kriteria</th>
+          <th class="text-center">Kategori</th>
+          <th>Sub Kategori</th>
           <th class="text-center">Tipe</th>
           <th class="text-center">Aksi</th>
         </tr>
@@ -77,8 +77,8 @@
           <tr>
             <td class="text-center">{{ $dokumens->firstItem() + $loop->index }}</td>
             <td><a class="text-success" href="/admin/dokumen/{{ $dokumen->id }}">{{ $dokumen->name }}</a></td>
-            <td class="text-center">{{ $dokumen->kriteria->name }}</td>
-            <td>{{ $dokumen->sub_kriteria }}</td>
+            <td class="text-center">{{ $dokumen->kategori->name }}</td>
+            <td>{{ $dokumen->sub_kategori }}</td>
             <td class="text-center">{{ $dokumen->tipe }}</td>
             <td class="text-center">
               <a class="text-primary" href="/admin/dokumen/{{ $dokumen->id }}/edit"><i class="bi bi-pencil-square"></i></a>

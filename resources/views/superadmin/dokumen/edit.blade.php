@@ -20,21 +20,21 @@
             @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="kriteria"  class=" text-dark h6" >Kriteria</label> <br>
-          <select class="form-control @error('kriteria') is-invalid @enderror" name="kriteria" id="kriteria" required>
-            @foreach ($kriterias as $kriteria)
-              <option value="{{ $kriteria->id }}" {{ $dokumen->kriteria_id == $kriteria->id ? 'selected' : '' }}>{{ $kriteria->name }}</option>
+          <label for="kategori"  class=" text-dark h6" >Kategori</label> <br>
+          <select class="form-control @error('kategori') is-invalid @enderror" name="kategori" id="kategori" required>
+            @foreach ($kategoris as $kategori)
+              <option value="{{ $kategori->id }}" {{ $dokumen->kategori_id == $kategori->id ? 'selected' : '' }}>{{ $kategori->name }}</option>
             @endforeach
           </select>
-          @if ($errors->has('kriteria'))
-            <p class="error text-danger">{{ $errors->first('kriteria') }}</p>
+          @if ($errors->has('kategori'))
+            <p class="error text-danger">{{ $errors->first('kategori') }}</p>
           @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-          <label for="sub_kriteria" class=" text-dark h6">Sub Kriteria</label>
-          <input class="form-control @error('sub_kriteria') is-invalid @enderror" type="text" name="sub_kriteria" id="sub_kriteria" value="{{ old('sub_kriteria', $dokumen->sub_kriteria) }}">
-          @if ($errors->has('sub_kriteria'))
-            <p class="error text-danger">{{ $errors->first('sub_kriteria') }}</p>
+          <label for="sub_kategori" class=" text-dark h6">Sub Kategori</label>
+          <input class="form-control @error('sub_kategori') is-invalid @enderror" type="text" name="sub_kategori" id="sub_kategori" value="{{ old('sub_kategori', $dokumen->sub_kategori) }}">
+          @if ($errors->has('sub_kategori'))
+            <p class="error text-danger">{{ $errors->first('sub_kategori') }}</p>
           @endif
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12 my-2">

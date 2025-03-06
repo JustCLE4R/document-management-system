@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\admin\DokumenRequest;
 use App\Http\Requests\admin\UpdateDokumenRequest;
 use App\Http\Controllers\DokumenController as PublicDokumenController;
-use App\Models\Kriteria;
+use App\Models\Kategori;
 
 class DokumenController extends Controller
 {
@@ -20,18 +20,18 @@ class DokumenController extends Controller
     public function index(Request $request)
     {
         $term = $request->input('result');
-        $kriteria = $request->input('kriteria');
+        $kategori = $request->input('kategori');
         $tipe = $request->input('tipe');
 
-        $dokumens = (new PublicDokumenController)->search($term, $kriteria, $tipe, 10);
-        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+        $dokumens = (new PublicDokumenController)->search($term, $kategori, $tipe, 10);
+        $kategoris = Kategori::where('department_id', Auth::user()->department_id)
                         ->orWhere('department_id', 1)
                         ->get();
 
         return view('admin.dokumen.index', [
             'title' => 'Admin Daftar Dokumen',
             'dokumens' => $dokumens,
-            'kriterias' => $kriterias
+            'kategoris' => $kategoris
         ]);
     }
 
@@ -41,14 +41,14 @@ class DokumenController extends Controller
     public function create()
     {
         $shareables = Dokumen::where('status', 'share')->get();
-        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+        $kategoris = Kategori::where('department_id', Auth::user()->department_id)
                         ->orWhere('department_id', 1)
                         ->get();
 
         return view('admin.dokumen.create', [
             'title' => 'Admin Tambah Dokumen',
             'shareables' => $shareables,
-            'kriterias' => $kriterias
+            'kategoris' => $kategoris
         ]);
     }
 
@@ -103,7 +103,7 @@ class DokumenController extends Controller
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
         $shareables = Dokumen::where('status', 'share')->get();
-        $kriterias = Kriteria::where('department_id', Auth::user()->department_id)
+        $kategoris = Kategori::where('department_id', Auth::user()->department_id)
                         ->orWhere('department_id', 1)
                         ->get();
 
@@ -111,7 +111,7 @@ class DokumenController extends Controller
             'title' => 'Admin Edit Dokumen',
             'dokumen' => $dokumen,
             'shareables' => $shareables,
-            'kriterias' => $kriterias
+            'kategoris' => $kategoris
         ]);
     }
 
@@ -123,7 +123,7 @@ class DokumenController extends Controller
         if($dokumen->user->department->id != Auth::user()->department->id)
             return redirect('/admin/dokumen')->with('error', 'Dokumen tidak ditemukan');
 
-        $prepareData = $request->only(['name', 'kriteria_id', 'sub_kriteria', 'catatan']);
+        $prepareData = $request->only(['name', 'kategori_id', 'sub_kategori', 'catatan']);
 
         if ($request->hasFile('file')) {
             $prepareData['status'] ='private';

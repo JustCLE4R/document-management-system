@@ -19,8 +19,8 @@ class DokumenFactory extends Factory
         return [
             'user_id' => $this->faker->randomElement([1, 2, 4]),
             'name' => $this->faker->realText(20),
-            'kriteria_id' => $this->faker->numberBetween(1, 9),
-            'sub_kriteria' => $this->faker->realText(30),
+            'kategori_id' => $this->faker->numberBetween(1, 9),
+            'sub_kategori' => $this->faker->realText(30),
             'catatan' => $this->faker->realText(100),
             'tipe' => $this->faker->randomElement(['PDF', 'URL', 'Image']),
             'path' => $this->faker->imageUrl(),

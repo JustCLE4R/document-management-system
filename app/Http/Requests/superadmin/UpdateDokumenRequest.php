@@ -14,8 +14,8 @@ class UpdateDokumenRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'kriteria' => 'required|numeric|between:1,12',
-            'sub_kriteria' => 'max:255',
+            'kategori' => 'required|numeric|between:1,12',
+            'sub_kategori' => 'max:255',
             'catatan' => 'max:255',
             'file' => 'nullable|mimes:pdf,png,jpg,jpeg|max:102400|prohibits:url',
             'url' => 'nullable|url|max:255|prohibits:file',
@@ -39,8 +39,8 @@ class UpdateDokumenRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'kriteria' => 'Kriteria',
-            'sub_kriteria' => 'Sub Kriteria',
+            'kategori' => 'Kategori',
+            'sub_kategori' => 'Sub Kategori',
             'catatan' => 'Catatan',
             'file' => 'File',
             'url' => 'URL',

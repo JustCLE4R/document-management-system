@@ -16,9 +16,9 @@ class Department extends Model
         return $this->hasMany(User::class);
     }
 
-    public function kriterias()
+    public function kategoris()
     {
-        return $this->hasMany(Kriteria::class);
+        return $this->hasMany(Kategori::class);
     }
 
     public function parent()

@@ -3,18 +3,17 @@
 @section('content')
 <section class="section-padding" style="margin-top: 9vh ;">
     <div class="section-header text-center">
-        <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Edit Kriteria</h2>
+        <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Kategori Baru</h2>
         <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
     </div>
     <div class="container border rounded shadow" style="width:70%;">
-        <form action="/admin/kriteria/{{ $kriteria->id }}" id="form" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
+        <form action="/admin/kategori" id="form" method="POST" enctype="multipart/form-data">
             <div class="row justify-content-between align-items-center p-3">
+                @csrf
                 <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-                    <label for="name" class="text-dark h6">Nama Kriteria</label>
+                    <label for="name" class="text-dark h6">Nama Kategori</label>
                     <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="name"
-                        value="{{ old('name', $kriteria->name) }}" required>
+                        value="{{ old('name') }}" required>
                     @if ($errors->has('name'))
                     <p class="error text-danger">{{ $errors->first('name') }}</p>
                     @endif
@@ -22,7 +21,7 @@
                 <div class="col-lg-4 col-md-6 col-sm-12 my-2">
                     <label for="description" class="text-dark h6">Deskripsi</label>
                     <input class="form-control @error('description') is-invalid @enderror" type="text"
-                        name="description" id="description" value="{{ old('description', $kriteria->description) }}">
+                        name="description" id="description" value="{{ old('description') }}">
                     @if ($errors->has('description'))
                     <p class="error text-danger">{{ $errors->first('description') }}</p>
                     @endif
@@ -34,7 +33,8 @@
                         id="department_id">
                         <option value="" selected>Pilih Fakultas atau Program Studi</option>
                         @foreach ($departments as $department)
-                        <option value="{{ $department->id }}" {{ old('department_id', $kriteria->department_id) == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                        <option value="{{ $department->id }}" {{ old('department_id')==$department->id ? 'selected' : ''
+                            }}>{{ $department->name }}</option>
                         @endforeach
                     </select>
                     @if ($errors->has('department_id'))
@@ -46,13 +46,15 @@
                     <div class="input-group">
                         <select class="form-control @error('icon') is-invalid @enderror" name="icon" id="icon">
                             <option value="" selected>Pilih Ikon</option>
-                            @foreach (json_decode(file_get_contents(public_path('json/bootstrap-icons.json')), true)['icons'] as $icon)
-                            <option value="{{ $icon }}" {{ old('icon', $kriteria->icon) == $icon ? 'selected' : '' }}>{{ $icon }}</option>
+                            @foreach (json_decode(file_get_contents(public_path('json/bootstrap-icons.json')),
+                            true)['icons'] as $icon)
+                            <option value="{{ $icon }}" {{ old('icon', 'file-earmark-text' )==$icon ? 'selected' : ''
+                                }}>{{ $icon }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">
                             <span class="input-group-text">
-                                <i id="icon-preview" class="bi bi-{{ old('icon', $kriteria->icon) }}"></i>
+                                <i id="icon-preview" class="bi bi-{{ old('icon', 'file-earmark-text') }}"></i>
                             </span>
                         </div>
                     </div>
@@ -70,8 +72,8 @@
                     @endpush
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 my-2">
-                    <img id="image-preview" src="{{ $kriteria->image ? asset('storage/' . $kriteria->image) : '#' }}" alt="Image Preview"
-                        style="display: {{ $kriteria->image ? 'block' : 'none' }}; max-width: 100%; height: auto; margin-top: 10px;">
+                    <img id="image-preview" src="#" alt="Image Preview"
+                        style="display: none; max-width: 100%; height: auto; margin-top: 10px;">
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12 my-2">
                     <label for="image" class="text-dark h6">Gambar</label>
@@ -106,10 +108,10 @@
                     @endif
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-between">
-                    <a href="/admin/kriteria" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i
+                    <a href="/admin/kategori" class="btn btn-success wow fadeInRight" data-wow-delay="0.3s"><i
                             class="bi bi-chevron-double-left"></i> Kembali</a>
                     <button class="btn btn-success mx-1 wow fadeInRight" type="submit"><i class="bi bi-check-lg"></i>
-                        Update</button>
+                        Submit</button>
                 </div>
             </div>
         </form>

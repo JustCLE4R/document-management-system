@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Kriteria;
+use App\Models\Kategori;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\admin\KriteriaRequest;
-use App\Http\Requests\admin\UpdateKriteriaRequest;
+use App\Http\Requests\admin\KategoriRequest;
+use App\Http\Requests\admin\UpdateKategoriRequest;
 
-class KriteriaController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +20,13 @@ class KriteriaController extends Controller
     {
         $search = $request->input('search');
 
-        $kriterias = Kriteria::where(function ($query) {
+        $kategoris = Kategori::where(function ($query) {
             $query->where('department_id', Auth::user()->department_id)
             ->orWhere('department_id', 1);
         });
 
         if ($search) {
-            $kriterias = $kriterias->where(function ($query) use ($search) {
+            $kategoris = $kategoris->where(function ($query) use ($search) {
                 $query->where('name', 'LIKE', "%{$search}%")
                         ->orWhere('description', 'LIKE', "%{$search}%")
                         ->orWhere('icon', 'LIKE', "%{$search}%")
@@ -34,10 +34,10 @@ class KriteriaController extends Controller
             });
         }
 
-        $kriterias = $kriterias->orderBy('created_at')->paginate(10);
+        $kategoris = $kategoris->orderBy('created_at')->paginate(10);
 
-        return view('admin.kriteria.index', [
-            'kriterias' => $kriterias,
+        return view('admin.kategori.index', [
+            'kategoris' => $kategoris,
         ]);
     }
 
@@ -46,34 +46,34 @@ class KriteriaController extends Controller
      */
     public function create()
     {
-        return view('admin.kriteria.create', [
-            'title' => 'Admin Tambah Kriteria',
+        return view('admin.kategori.create', [
+            'title' => 'Admin Tambah Kategori',
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(KriteriaRequest $request)
+    public function store(KategoriRequest $request)
     {
         $prepareData = $request->except('image');
 
         $prepareData['department_id'] = Auth::user()->department_id;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('kriteria', 'public');
+            $imagePath = $request->file('image')->store('kategori', 'public');
             $prepareData['image'] = $imagePath;
         }
 
-        Kriteria::create($prepareData);
+        Kategori::create($prepareData);
 
-        return redirect()->route('admin.kriteria.index')->with('success', 'Kriteria berhasil ditambahkan!');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Kriteria $kriteria)
+    public function show(Kategori $kategori)
     {
         //
     }
@@ -81,17 +81,17 @@ class KriteriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kriteria $kriteria)
+    public function edit(Kategori $kategori)
     {
-        if ($kriteria->department_id !== Auth::user()->department_id) {
+        if ($kategori->department_id !== Auth::user()->department_id) {
             abort(403);
         }
 
         $departments = Department::where('id', Auth::user()->department_id)->get();
 
-        return view('admin.kriteria.edit', [
-            'title' => 'Admin Edit Kriteria',
-            'kriteria' => $kriteria,
+        return view('admin.kategori.edit', [
+            'title' => 'Admin Edit Kategori',
+            'kategori' => $kategori,
             'departments' => $departments,
         ]);
     }
@@ -99,42 +99,42 @@ class KriteriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKriteriaRequest $request, Kriteria $kriteria)
+    public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
-        if ($kriteria->department_id !== Auth::user()->department_id) {
+        if ($kategori->department_id !== Auth::user()->department_id) {
             abort(403);
         }
 
         $prepareData = $request->except('image');
 
         if ($request->hasFile('image')) {
-            if ($kriteria->image) {
-                Storage::disk('public')->delete($kriteria->image);
+            if ($kategori->image) {
+                Storage::disk('public')->delete($kategori->image);
             }
-            $imagePath = $request->file('image')->store('kriteria', 'public');
+            $imagePath = $request->file('image')->store('kategori', 'public');
             $prepareData['image'] = $imagePath;
         }
 
-        $kriteria->update($prepareData);
+        $kategori->update($prepareData);
 
-        return redirect()->route('admin.kriteria.index')->with('success', 'Kriteria berhasil diperbarui!');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kriteria $kriteria)
+    public function destroy(Kategori $kategori)
     {
-        if ($kriteria->department_id !== Auth::user()->department_id) {
+        if ($kategori->department_id !== Auth::user()->department_id) {
             abort(403);
         }
 
-        if ($kriteria->image && $kriteria->image !== 'kriteria/default-kriteria.svg') {
-            Storage::disk('public')->delete($kriteria->image);
+        if ($kategori->image && $kategori->image !== 'kategori/default-kategori.svg') {
+            Storage::disk('public')->delete($kategori->image);
         }
 
-        $kriteria->delete();
+        $kategori->delete();
 
-        return redirect()->route('admin.kriteria.index')->with('success', 'Kriteria berhasil dihapus!');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus!');
     }
 }

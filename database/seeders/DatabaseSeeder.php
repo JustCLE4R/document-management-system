@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Dokumen;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Database\Seeders\KriteriaSeeder;
+use Database\Seeders\KategoriSeeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->createUser('Admin Manajemen', 'adminmanajemen', 'adminmanajemen', 'admin', 13);
         $this->createUser('User Manajemen', 'usermanajemen', 'usermanajemen', 'user', 13);
 
-        $this->call(KriteriaSeeder::class);
+        $this->call(KategoriSeeder::class);
 
         Dokumen::factory(1415)->sequence(
             ['revisions' => 10], 

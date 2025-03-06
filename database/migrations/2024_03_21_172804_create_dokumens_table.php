@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('dokumens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('kriteria_id')->constrained('Kriterias')->onDelete('cascade');
+            $table->foreignId('kategori_id')->constrained('Kategoris')->onDelete('cascade');
             $table->string('name');
-            $table->string('sub_kriteria')->nullable()->default('-');
+            $table->string('sub_kategori')->nullable()->default('-');
             $table->text('catatan')->nullable();
             $table->string('tipe');
             $table->string('path');
