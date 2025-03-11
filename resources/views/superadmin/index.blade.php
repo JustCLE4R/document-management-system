@@ -36,41 +36,41 @@
         @endpush
         <div class="row justify-content-center">
             <!-- Services item start -->
-            <div class="col-md-6 col-lg-4 col-xs-12"  onclick="window.location.href='/superadmin/dokumen'">
-                    <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.3s">
-                        <div class="icon">
-                            <i class="lni-cog"></i>
-                        </div>
-                        <div class="services-content ">
-                            <span class="h4 text-success">Dokumen</span>
-                        </div>
+            <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/dokumen'">
+                <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.3s">
+                    <div class="icon">
+                        <i class="bi bi-file-earmark-text"></i>
                     </div>
+                    <div class="services-content">
+                        <span class="h4 text-success">Dokumen</span>
+                    </div>
+                </div>
             </div>
             <!-- Services item end -->
 
             <!-- Services item start -->
             <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/department'">
-                    <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.6s">
-                        <div class="icon">
-                            <i class="bi bi-building-gear"></i>
-                        </div>
-                        <div class="services-content">
-                            <span class="h4 text-success">Department</span>
-                        </div>
+                <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.6s">
+                    <div class="icon">
+                        <i class="bi bi-building-gear"></i>
                     </div>
+                    <div class="services-content">
+                        <span class="h4 text-success">Department</span>
+                    </div>
+                </div>
             </div>
             <!-- Services item end -->
 
             <!-- Services item start -->
             <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/user'">
-                    <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.9s">
-                        <div class="icon">
-                            <i class="bi bi-person-gear"></i>
-                        </div>
-                        <div class="services-content">
-                            <span class="h4 text-success">Akun</span>
-                        </div>
+                <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="0.9s">
+                    <div class="icon">
+                        <i class="bi bi-person-gear"></i>
                     </div>
+                    <div class="services-content">
+                        <span class="h4 text-success">Akun</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Services item end -->
@@ -96,6 +96,19 @@
                     </div>
                     <div class="services-content">
                         <span class="h4 text-success">Statistik</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Services item end -->
+
+            <!-- Services item start -->
+            <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href='/superadmin/setting'">
+                <div class="services-item bg-light border wow fadeInRight py-5" data-wow-delay="1.8s">
+                    <div class="icon">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <div class="services-content">
+                        <span class="h4 text-success">Setting</span>
                     </div>
                 </div>
             </div>

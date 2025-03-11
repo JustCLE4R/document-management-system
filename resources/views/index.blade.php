@@ -26,10 +26,10 @@
             @endif
           </h4>
           <h2 class="head-title wow fadeInRight" ata-wow-delay="0.3s">
-            Selamat Datang di Sistem Manajemen Dokumen UINSU
+            Selamat Datang di {{ $settings->app_name }}
           </h2>
           <p class="wow fadeInRight" ata-wow-delay="0.3s">
-              Platform Terpusat untuk Pengelolaan dan Akses Dokumen Akademik Universitas Islam Negeri Sumatera Utara
+              {{ $settings->app_description }}
           </p>        
           <div class="header-button wow fadeInRight" ata-wow-delay="0.5s">
             <form class="d-inline" action="/daftar-dokumen" method="get">

@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\DokumenController as AdminDokumenController;
 use App\Http\Controllers\admin\KategoriController as AdminKategoriController;
 use App\Http\Controllers\superadmin\UserController as SuperadminUserController;
 use App\Http\Controllers\superadmin\DokumenController as SuperadminDokumenController;
+use App\Http\Controllers\superadmin\SettingController as SuperadminSettingController;
 use App\Http\Controllers\superadmin\KategoriController as SuperAdminKategoriController;
 use App\Http\Controllers\superadmin\StatistikController as SuperadminStatistikController;
 use App\Http\Controllers\superadmin\DepartmentController as SuperadminDepartmentController;
@@ -40,4 +41,7 @@ Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-head
     Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');
     Route::resource('/kategori', SuperAdminKategoriController::class)->parameters(['kategori' => 'kategori'])->names('superadmin.kategori');
     Route::resource('/user', SuperadminUserController::class)->parameters(['user' => 'user'])->except(['show'])->names('superadmin.user');
+
+    Route::get('/setting', [SuperadminSettingController::class, 'index'])->name('superadmin.setting.index');
+    Route::put('/setting', [SuperadminSettingController::class, 'update'])->name('superadmin.setting.update');
 });

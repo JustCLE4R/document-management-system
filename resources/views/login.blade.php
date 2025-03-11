@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
-    <title>Masuk | {{ env('APP_NAME', 'DMS - UINSU') }}</title>
+    <title>Masuk | {{ $settings->app_alias . ' - UINSU' }}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
         
         <div class="text" data-aos="fade-up" data-aos-duration="800">
           <div class="carousel">
-            <span class="text-1">Selamat Datang <br> Di Website AIPT UIN Sumatera Utara</span>
+            <span class="text-1">Selamat Datang <br> Di Website {{ $settings->app_name }} UIN Sumatera Utara</span>
             <span class="text-1" style="display: none;">Terima Kasih <br> Telah Menggunakan Layanan Kami</span>
             <!-- Add additional text items here -->
           </div>
