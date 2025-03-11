@@ -23,7 +23,7 @@ class SettingController extends Controller
      */
     public function update(UpdateSettingRequest $request)
     {
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->except('_token', '_method') as $key => $value) {
             Setting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
 
