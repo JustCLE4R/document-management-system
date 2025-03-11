@@ -36,7 +36,8 @@ class KategoriController extends Controller
 
         return view('superadmin.kategori.index', [
             'kategoris' => $kategoris,
-            'departments' => $departments
+            'departments' => $departments,
+            'title' => 'Daftar Kategori',
         ]);
     }
 
@@ -46,7 +47,7 @@ class KategoriController extends Controller
     public function create()
     {
         return view('superadmin.kategori.create', [
-            'title' => 'Admin Tambah Kategori',
+            'title' => 'Tambah Kategori',
         ]);
     }
 
@@ -83,7 +84,7 @@ class KategoriController extends Controller
         $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.kategori.edit', [
-            'title' => 'Admin Edit Kategori',
+            'title' => 'Edit Kategori',
             'kategori' => $kategori,
             'departments' => $departments,
         ]);

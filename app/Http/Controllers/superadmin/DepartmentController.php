@@ -20,7 +20,7 @@ class DepartmentController extends Controller
         $departments = $this->search($term, 10)->withQueryString();
 
         return view('superadmin.department.index', [
-            'title' => 'Super Admin Daftar Department',
+            'title' => 'Daftar Department',
             'departments' => $departments
         ]);
     }
@@ -33,7 +33,7 @@ class DepartmentController extends Controller
         $faculties = Department::where('type', 'faculty')->get();
 
         return view('superadmin.department.create', [
-            'title' => 'Super Admin Tambah Department',
+            'title' => 'Tambah Department',
             'faculties' => $faculties
         ]);
     }
@@ -60,7 +60,7 @@ class DepartmentController extends Controller
         $faculties = Department::where('type', 'faculty')->get();
 
         return view('superadmin.department.edit', [
-            'title' => 'Super Admin Edit Department',
+            'title' => 'Edit Department',
             'department' => $department,
             'faculties' => $faculties
         ]);

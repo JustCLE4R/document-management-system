@@ -30,7 +30,7 @@ class DokumenController extends Controller
         $kategoris = Kategori::all();
 
         return view('superadmin.dokumen.index', [
-            'title' => 'Super Admin Daftar Dokumen',
+            'title' => 'Daftar Dokumen',
             'dokumens' => $dokumens,
             'departments' => $departments,
             'kategoris' => $kategoris
@@ -46,7 +46,7 @@ class DokumenController extends Controller
         $users = User::where('role', '!=', 'user')->get()->unique('department_id');
 
         return view('superadmin.dokumen.create', [
-            'title' => 'Super Admin Tambah Dokumen',
+            'title' => 'Tambah Dokumen',
             'kategoris' => $kategoris,
             'users' => $users
         ]);
@@ -80,7 +80,7 @@ class DokumenController extends Controller
     public function show(Dokumen $dokumen)
     {
         return view('superadmin.dokumen.show', [
-            'title' => 'Super Admin Detail Dokumen',
+            'title' => 'Detail Dokumen',
             'dokumen' => $dokumen
         ]);
     }
@@ -95,7 +95,7 @@ class DokumenController extends Controller
 
         return view('superadmin.dokumen.edit', [
             'departments' => $departments,
-            'title' => 'Super Admin Edit Dokumen',
+            'title' => 'Edit Dokumen',
             'dokumen' => $dokumen,
             'kategoris' => $kategoris
         ]);

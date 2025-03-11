@@ -25,7 +25,7 @@ class UserController extends Controller
         $users = $this->search($prodiSearch, $roleSearch, 10)->withQueryString();
         
         return view('superadmin.akun.index',[
-            'title' => 'Super Admin Daftar User',
+            'title' => 'Daftar User',
             'users' => $users,
             'departments' => $departments,
         ]);
@@ -39,7 +39,7 @@ class UserController extends Controller
         $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.akun.create', [
-            'title' => 'Super Admin Tambah User',
+            'title' => 'Tambah User',
             'departments' => $departments
         ]);
     }
@@ -70,7 +70,7 @@ class UserController extends Controller
         $departments = Department::orderByRaw("CASE WHEN parent_id IS NULL THEN id ELSE parent_id END, parent_id IS NOT NULL, name")->get();
 
         return view('superadmin.akun.edit', [
-            'title' => 'Super Admin Edit User',
+            'title' => 'Edit User',
             'user' => $user,
             'departments' => $departments
         ]);

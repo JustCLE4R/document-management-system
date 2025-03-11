@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware(['auth', 'is-admin', 'security-header'])->gro
 });
 
 Route::prefix('superadmin')->middleware(['auth', 'is-superadmin', 'security-header'])->group(function () {
-    Route::view('/', 'superadmin.index');
+    Route::view('/', 'superadmin.index',['title' => 'Super Admin']);
     Route::get('/statistik', [SuperadminStatistikController::class, 'index'])->name('superadmin.statistik');
     Route::resource('/dokumen', SuperadminDokumenController::class)->parameters(['dokumen' => 'dokumen'])->names('superadmin.dokumen');
     Route::resource('/department', SuperadminDepartmentController::class)->parameters(['department' => 'department'])->except(['show'])->names('superadmin.department');

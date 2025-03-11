@@ -16,6 +16,7 @@ class StatistikController extends Controller
         $totalDepartment = Department::count();
 
         return view('superadmin.statistik.index',[
+            'title' => 'Statistik',
             'totalDocuments' => Dokumen::totalDocuments(),
             'totalKategori' => $totalKategori,
             'totalDepartment' => $totalDepartment,
