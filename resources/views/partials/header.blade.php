@@ -1,6 +1,6 @@
 <div class="loader-container" id="loader-container">
     <div class="loader"></div>
-    <div class="text-loader">AIPT-UINSU</div>
+    <div class="text-loader">{{ $settings->app_alias }}-UINSU</div>
 </div>
 
 
