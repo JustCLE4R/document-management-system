@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
         <div class="contents move-effect ">
-          <h4> 
+          <h4 data-wow-delay="0.3s" class="wow fadeInRight"> 
             Halo,
             @if (Auth::user()->role == 'superadmin')
                 Superadmin!
@@ -25,13 +25,13 @@
                 
             @endif
           </h4>
-          <h2 class="head-title wow fadeInRight" ata-wow-delay="0.3s">
+          <h2 class="head-title wow fadeInRight" data-wow-delay="0.3s">
             Selamat Datang di {{ $settings->app_name }}
           </h2>
-          <p class="wow fadeInRight" ata-wow-delay="0.3s">
+          <p class="wow fadeInRight" data-wow-delay="0.3s">
               {{ $settings->app_description }}
           </p>        
-          <div class="header-button wow fadeInRight" ata-wow-delay="0.5s">
+          <div class="header-button wow fadeInRight" data-wow-delay="0.5s">
             <form class="d-inline" action="/daftar-dokumen" method="get">
               <div class="input-group mb-3">
                 <select class="form-select p-1 bg-success text-light shadow" name="kategori" id="" style="width: 90px;">
@@ -63,7 +63,7 @@
               </div>
             </form>
           </div>
-          <div class="row wow fadeInRight" ata-wow-delay="0.7s">
+          <div class="row wow fadeInRight" data-wow-delay="0.7s">
             <div class="col-lg-3 col-6">
               <div class="stats-item text-center">
                 <span id="kategoriCounter" class="purecounter">0</span>
@@ -92,7 +92,7 @@
         </div>
       </div>
       <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
-        <div class="intro-img wow fadeInRight" ata-wow-delay="0.8s">
+        <div class="intro-img wow fadeInRight" data-wow-delay="0.8s">
           <div class="hero-figure-box hero-figure-box-09 move-effect" ></div>
           <div class="hero-figure-box hero-figure-box-07 move-effect" ></div>
           <div class="hero-figure-box hero-figure-box-08 " data-wow-delay=".5s" data-rotation="-22deg" style="transform: rotate(-22deg) scale(1); opacity: 1;"></div>
@@ -108,21 +108,21 @@
 <section id="services" class="section-padding">
   <div class="container">
     <div class="section-header text-center">
-      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Laporan Evaluasi Diri</h2>
+      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Laporan {{ $settings->app_name }}</h2>
       <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
     </div>
     <div class="row">
 
       @foreach ($kategoris as $kategori)
         <div class="col-md-6 col-lg-4 col-xs-12" onclick="window.location.href = '/daftar-dokumen?kategori={{ $kategori->id }}'">
-          <div class="services-item bg-light wow fadeInRight border" data-wow-delay="0.9s" >
+          <div class="services-item bg-light wow fadeInRight border" data-wow-delay="{{ ($loop->index + 1) * 0.3 }}s">
             <div class="bg-img" style="background-image: url('{{ url('storage/'.$kategori->image) }}');">
               <div class="icon bg-light ">
                 <i class="bi bi-{{ $kategori->icon }}"></i>
               </div>
             </div>
             <div class="services-content p-3">
-              <h3><a href="/daftar-dokumen?kategori=1">{{ $kategori->name }}</a></h3>
+              <h3><a href="/daftar-dokumen?kategori={{ $kategori->id }}">{{ $kategori->name }}</a></h3>
               <p>{{ $kategori->description }}</p>
             </div>
           </div>
@@ -133,7 +133,7 @@
   </div>
 </section>
 
-<div class="about-area section-padding bg-gray">
+{{-- <div class="about-area section-padding bg-gray">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-xs-12 info">
@@ -185,8 +185,88 @@
 
     </div>
   </div>
-</div>
+</div> --}}
 
+<!-- Visi Misi Start -->
+<section id="features" class="section-padding">
+  <div class="container">
+    <div class="section-header text-center">          
+      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Visi & Misi</h2>
+      <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="content-left">
+          <div class="box-item wow fadeInLeft" data-wow-delay="0.3s">
+            <span class="icon  ">
+              <i class="lni-laptop-phone"></i>
+            </span>
+            <div class="text">
+              <h4>Integrasi Ilmu (Wahdatul 'Ulum)</h4>
+              <p>Menciptakan ulul albab, cendekiawan yang ulama, dan kader bangsa yang menerapkan ilmunya untuk kemajuan Indonesia dan umat manusia.</p>
+            </div>
+          </div>
+          <div class="box-item wow fadeInLeft" data-wow-delay="0.6s">
+            <span class="icon  ">
+              <i class="lni-laptop-phone"></i>
+            </span>
+            <div class="text">
+              <h4>Pembangunan Peradaban</h4>
+              <p>Menetapkan pusat keunggulan institusional dan fakultatif, sebagai kelanjutan dari Sumatera Utara sebagai 'titik nol' peradaban di Asia Tenggara.</p>
+            </div>
+          </div>
+          <div class="box-item wow fadeInLeft" data-wow-delay="0.9s">
+            <span class="icon  ">
+              <i class="lni-cog"></i>
+            </span>
+            <div class="text">
+              <h4>Moderasi Beragama</h4>
+              <p>Menjadikan moderasi beragama sebagai sikap dasar bagi seluruh Sivitas Akademika, sehingga ilmu pengetahuan Islam membawa kebaikan bagi semua.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="show-box wow fadeInUp d-flex justify-content-center" data-wow-delay="0.3s">
+          <img src="/img/hero/rektor.png" width="450px" alt="">
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="content-right">
+          <div class="box-item wow fadeInRight" data-wow-delay="0.3s">
+            <span class="icon  ">
+              <i class="lni-leaf"></i>
+            </span>
+            <div class="text">
+              <h4>Peningkatan Kesejahteraan</h4>
+              <p>Meningkatkan kesejahteraan seluruh Dosen dan karyawan Universitas melalui peningkatan grade remunerasi, pemberdayaan Badan Layanan Umum</p>
+            </div>
+          </div>
+          <div class="box-item wow fadeInRight" data-wow-delay="0.6s">
+            <span class="icon  ">
+              <i class="lni-layers"></i>
+            </span>
+            <div class="text">
+              <h4>Peningkatan Sarana</h4>
+              <p>Terus-menerus meningkatkan kelengkapan sarana dan prasarana pembelajaran, berorientasi digital, riset yang bermanfaat bagi pembangunan</p>
+            </div>
+          </div>
+          <div class="box-item wow fadeInRight" data-wow-delay="0.9s">
+            <span class="icon  ">
+              <i class="lni-leaf"></i>
+            </span>
+            <div class="text">
+              <h4>Pengembangan Ilmu</h4>
+              <p> maksimalisasi peran Indonesia dalam pembangunan peradaban sebagai kelanjutan logis dari Sumatera Utara sebagai ‘titik nol’ peradaban</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- Aplikasi layanan start --}}
 <section id="pricing" class="pricing-section pricing-style-4 bg-light">
   <div class="container">
     <div class="row align-items-center">
@@ -417,166 +497,88 @@
 </div>
 <!-- About Section End -->
 
-<!-- Features Section Start -->
-<section id="features" class="section-padding">
-  <div class="container">
-    <div class="section-header text-center">          
-      <h2 class="section-title wow fadeInDown" data-wow-delay="0.3s">Visi & Misi</h2>
-      <div class="shape wow fadeInDown" data-wow-delay="0.3s"></div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-        <div class="content-left">
-          <div class="box-item wow fadeInLeft" data-wow-delay="0.6s">
-            <span class="icon  ">
-              <i class="lni-laptop-phone"></i>
-            </span>
-            <div class="text">
-              <h4>Integrasi Ilmu (Wahdatul 'Ulum)</h4>
-              <p>Menciptakan ulul albab, cendekiawan yang ulama, dan kader bangsa yang menerapkan ilmunya untuk kemajuan Indonesia dan umat manusia.</p>
-            </div>
-          </div>
-          <div class="box-item wow fadeInLeft" data-wow-delay="0.6s">
-            <span class="icon  ">
-              <i class="lni-laptop-phone"></i>
-            </span>
-            <div class="text">
-              <h4>Pembangunan Peradaban</h4>
-              <p>Menetapkan pusat keunggulan institusional dan fakultatif, sebagai kelanjutan dari Sumatera Utara sebagai 'titik nol' peradaban di Asia Tenggara.</p>
-            </div>
-          </div>
-          <div class="box-item wow fadeInLeft" data-wow-delay="0.9s">
-            <span class="icon  ">
-              <i class="lni-cog"></i>
-            </span>
-            <div class="text">
-              <h4>Moderasi Beragama</h4>
-              <p>Menjadikan moderasi beragama sebagai sikap dasar bagi seluruh Sivitas Akademika, sehingga ilmu pengetahuan Islam membawa kebaikan bagi semua.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-        <div class="show-box wow fadeInUp d-flex justify-content-center" data-wow-delay="0.3s">
-          <img src="/img/hero/rektor.png" width="450px" alt="">
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-        <div class="content-right">
-          <div class="box-item wow fadeInRight" data-wow-delay="0.3s">
-            <span class="icon  ">
-              <i class="lni-leaf"></i>
-            </span>
-            <div class="text">
-              <h4>Peningkatan Kesejahteraan</h4>
-              <p>Meningkatkan kesejahteraan seluruh Dosen dan karyawan Universitas melalui peningkatan grade remunerasi, pemberdayaan Badan Layanan Umum</p>
-            </div>
-          </div>
-          <div class="box-item wow fadeInRight" data-wow-delay="0.6s">
-            <span class="icon  ">
-              <i class="lni-layers"></i>
-            </span>
-            <div class="text">
-              <h4>Peningkatan Sarana</h4>
-              <p>Terus-menerus meningkatkan kelengkapan sarana dan prasarana pembelajaran, berorientasi digital, riset yang bermanfaat bagi pembangunan</p>
-            </div>
-          </div>
-          <div class="box-item wow fadeInRight" data-wow-delay="0.9s">
-            <span class="icon  ">
-              <i class="lni-leaf"></i>
-            </span>
-            <div class="text">
-              <h4>Pengembangan Ilmu</h4>
-              <p> maksimalisasi peran Indonesia dalam pembangunan peradaban sebagai kelanjutan logis dari Sumatera Utara sebagai ‘titik nol’ peradaban</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 @push('scripts')
 <script src="/js/glightbox.min.js"></script>
 <script src="/js/tiny-slider.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-$(document).ready(function() {
-    var jsonData;
-    var currentPage = 1;
-    var itemsPerPage = 10;
+// $(document).ready(function() {
+//     var jsonData;
+//     var currentPage = 1;
+//     var itemsPerPage = 10;
 
-    $.getJSON('dataAkreditasi.json', function(data) {
-        jsonData = data;
-        displayData();
-    });
+//     $.getJSON('dataAkreditasi.json', function(data) {
+//         jsonData = data;
+//         displayData();
+//     });
 
-    function displayData() {
-        var startIndex = (currentPage - 1) * itemsPerPage;
-        var endIndex = startIndex + itemsPerPage;
-        var paginatedData = jsonData.S1.slice(startIndex, endIndex);
+//     function displayData() {
+//         var startIndex = (currentPage - 1) * itemsPerPage;
+//         var endIndex = startIndex + itemsPerPage;
+//         var paginatedData = jsonData.S1.slice(startIndex, endIndex);
 
-        var tbody = $('#data-table tbody');
-        tbody.empty();
-        $.each(paginatedData, function(index, item) {
-            var row = $('<tr>');
-            row.append($('<th scope="row">').text(item["No."]));
-            row.append($('<td>').text(item.Fakultas));
-            row.append($('<td>').text(item.Prodi));
-            row.append($('<td>').text(item.Strata));
-            row.append($('<td>').text(item["No. SK Akreditasi"]));
-            row.append($('<td>').text(item["Tahun SK"]));
-            row.append($('<td>').text(item.Nilai));
-            row.append($('<td>').text(item.Peringkat));
-            row.append($('<td>').text(item["Tanggal Daluarsa"]));
-            tbody.append(row);
-        });
+//         var tbody = $('#data-table tbody');
+//         tbody.empty();
+//         $.each(paginatedData, function(index, item) {
+//             var row = $('<tr>');
+//             row.append($('<th scope="row">').text(item["No."]));
+//             row.append($('<td>').text(item.Fakultas));
+//             row.append($('<td>').text(item.Prodi));
+//             row.append($('<td>').text(item.Strata));
+//             row.append($('<td>').text(item["No. SK Akreditasi"]));
+//             row.append($('<td>').text(item["Tahun SK"]));
+//             row.append($('<td>').text(item.Nilai));
+//             row.append($('<td>').text(item.Peringkat));
+//             row.append($('<td>').text(item["Tanggal Daluarsa"]));
+//             tbody.append(row);
+//         });
 
-        // Update pagination
-        updatePagination();
-    }
+//         // Update pagination
+//         updatePagination();
+//     }
 
-    function updatePagination() {
-        var totalPages = Math.ceil(jsonData.S1.length / itemsPerPage);
-        var pagination = $('#pagination');
-        pagination.empty();
+//     function updatePagination() {
+//         var totalPages = Math.ceil(jsonData.S1.length / itemsPerPage);
+//         var pagination = $('#pagination');
+//         pagination.empty();
 
-        // Previous Page Button
-        pagination.append($('<li class="page-item" id="prev-page">')
-            .append($('<a class="page-link" href="#" aria-label="Previous">')
-                .append($('<span aria-hidden="true">&laquo;</span>'))
-                .click(function() {
-                    event.preventDefault();
-                    if (currentPage > 1) {
-                        currentPage--;
-                        displayData();
-                    }
-                })));
+//         // Previous Page Button
+//         pagination.append($('<li class="page-item" id="prev-page">')
+//             .append($('<a class="page-link" href="#" aria-label="Previous">')
+//                 .append($('<span aria-hidden="true">&laquo;</span>'))
+//                 .click(function() {
+//                     event.preventDefault();
+//                     if (currentPage > 1) {
+//                         currentPage--;
+//                         displayData();
+//                     }
+//                 })));
 
-        // Page Numbers
-        for (var i = 1; i <= totalPages; i++) {
-            pagination.append($('<li class="page-item">')
-                .append($('<a class="page-link" href="#">').text(i))
-                .click(function() {
-                    event.preventDefault();
-                    currentPage = parseInt($(this).text());
-                    displayData();
-                }));
-        }
+//         // Page Numbers
+//         for (var i = 1; i <= totalPages; i++) {
+//             pagination.append($('<li class="page-item">')
+//                 .append($('<a class="page-link" href="#">').text(i))
+//                 .click(function() {
+//                     event.preventDefault();
+//                     currentPage = parseInt($(this).text());
+//                     displayData();
+//                 }));
+//         }
 
-        // Next Page Button
-        pagination.append($('<li class="page-item" id="next-page">')
-            .append($('<a class="page-link" href="#" aria-label="Next">')
-                .append($('<span aria-hidden="true">&raquo;</span>'))
-                .click(function() {
-                    event.preventDefault();
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        displayData();
-                    }
-                })));
-    }
-});
+//         // Next Page Button
+//         pagination.append($('<li class="page-item" id="next-page">')
+//             .append($('<a class="page-link" href="#" aria-label="Next">')
+//                 .append($('<span aria-hidden="true">&raquo;</span>'))
+//                 .click(function() {
+//                     event.preventDefault();
+//                     if (currentPage < totalPages) {
+//                         currentPage++;
+//                         displayData();
+//                     }
+//                 })));
+//     }
+// });
 </script>
 <script>
   (function() {
