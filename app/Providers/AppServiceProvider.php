@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,9 +27,16 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
 
-        // Share settings globally as an object
-        View::share('settings', (object) Cache::rememberForever('app_settings', function () {
-            return Setting::pluck('value', 'key')->toArray();
-        }));
+        try {
+            if (Schema::hasTable('settings')) {
+                $settings = (object) Cache::rememberForever('app_settings', function () {
+                    return Setting::pluck('value', 'key')->toArray();
+                });
+    
+                View::share('settings', $settings);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error loading app settings: ' . $e->getMessage());
+        }
     }
 }
