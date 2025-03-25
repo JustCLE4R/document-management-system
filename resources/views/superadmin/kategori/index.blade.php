@@ -55,7 +55,7 @@
                         <input class="form-control shadow" type="search" placeholder="Cari Kategori" aria-label="Search"
                             name="search" value="{{ request('search') }}" style="height: 38px;">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" id="button-addon2"><i
+                            <button class="btn btn-success" id="button-addon2"><i
                                     class="bi bi-search"></i></button>
                         </div>
                     </div>

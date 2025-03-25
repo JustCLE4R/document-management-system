@@ -67,7 +67,7 @@
 <!-- Footer Section End -->
 
 <!-- Go to Top Link -->
-<a href="#" class="back-to-top">
+<a href="#hero-area" class="back-to-top">
   <i class="bi bi-caret-up-fill"></i>
 </a>
 

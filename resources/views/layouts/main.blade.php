@@ -32,7 +32,14 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 
     @stack('styles')
-
+    <style>
+      :root {
+          --color-primary: {{ $settings->color_primary }};
+          --color-secondary: {{ $settings->color_secondary }};
+          --color-tertiary: {{ $settings->color_tertiary }};
+      }
+    </style>
+   
 </head>
 <body>
   <ul class="notifications" style="z-index: 999"></ul>
