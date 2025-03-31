@@ -1604,6 +1604,8 @@ textarea {
   position: relative;
   padding: 150px 0px 0px;
   background-image:url('/img/bg/bg-2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .footer-area .footer-titel {
@@ -1943,4 +1945,30 @@ button:hover{
   font-size: 16px;
   line-height: 34px;
   margin-bottom: 12px;
+}
+
+.card{
+  background-color: var(--color-primary) !important;
+  border-radius: 25px !important;
+}
+/* Untuk browser berbasis WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Lebar scrollbar */
+}
+
+/* Warna track (jalur scrollbar) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Bisa diganti sesuai kebutuhan */
+  border-radius: 5px;
+}
+
+/* Warna thumb (bagian yang bisa digeser) */
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+/* Hover pada thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-primary), 0.8);
 }
